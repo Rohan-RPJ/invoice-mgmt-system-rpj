@@ -6,7 +6,7 @@ import {
 import { useState } from "react";
 import CreateInvoiceFormComponent from "./invoice_form/CreateInvoiceFormComponent";
 
-const CreateInvoiceMainComponent = ({isMobileNav}) => {
+const CreateInvoiceMainComponent = ({ isMobileNav }) => {
   return (
     <div className={`w-full h-full`}>
       <div className={``}>

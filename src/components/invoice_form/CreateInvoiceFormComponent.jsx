@@ -266,9 +266,7 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
           )}
         </div>
         <div
-          className={`${
-            isMobileNav ? "w-full" : "w-[50%] basis-1/2"
-          } h-full`}
+          className={`${isMobileNav ? "w-full" : "w-[50%] basis-1/2"} h-full`}
         >
           <ViewPdf
             doc={Invoice}
