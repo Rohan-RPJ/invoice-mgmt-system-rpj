@@ -27,7 +27,7 @@ const InvoiceFormFooterButtons = ({
         disabled={activeComponent === 0 ? true : false}
       />
 
-      <div className="w-full h-full flex flex-row justify-end items-end">
+      <div className="w-full h-full flex flex-row justify-end items-center">
         <CustomButtonWithIcon
           label="Save"
           btnType={"submit"}
@@ -35,6 +35,7 @@ const InvoiceFormFooterButtons = ({
           bgColor="bg-green-600"
           hoverBgColor="hover:bg-green-700"
           textColor="text-white"
+          showTextOnSmallScreens={true}
         />
         {activeComponent < 1 ? (
           <CustomButtonWithIcon

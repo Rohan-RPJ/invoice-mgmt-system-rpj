@@ -1,12 +1,5 @@
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import { Document, Page } from "react-pdf";
-// import * as PDFJS from "pdfjs-dist/build/pdf";
-// import { PDFReader } from "react-read-pdf";
-// PDFJS.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS.version}/pdf.worker.min.js`;
-// import { Viewer, Worker } from "@react-pdf-viewer/core";
-// Import styles
-import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/core/lib/styles/index.css"; // Import styles for react-pdf-viewer/core
 
 const DynamicReactPdfViewer = dynamic(
   () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
@@ -36,6 +29,7 @@ const DynamicPDFViewer = dynamic(
   }
 );
 
+// Below Commented also working - controls can be shown
 {
   /* <DynamicReactPdfViewer
       width={"50%"}
@@ -46,8 +40,9 @@ const DynamicPDFViewer = dynamic(
       <MyPdfDocument data={pdfData} />
     </DynamicReactPdfViewer> */
 }
+
 const ViewPdf = ({ doc: MyPdfDocument, pdfData, isMobileNav }) => {
-  return isMobileNav ? (
+  return (
     <DynamicBlobProvider document={<MyPdfDocument data={pdfData} />}>
       {({ blob, url, loading }) => {
         return loading ? (
@@ -59,27 +54,6 @@ const ViewPdf = ({ doc: MyPdfDocument, pdfData, isMobileNav }) => {
         );
       }}
     </DynamicBlobProvider>
-  ) : (
-    <DynamicReactPdfViewer
-      width={"50%"}
-      height="100%"
-      className={`absolute`}
-      showToolbar={false}
-    >
-      <MyPdfDocument data={pdfData} />
-    </DynamicReactPdfViewer>
-  );
-};
-
-const ThisDoc = ({ url, blob }) => {
-  return (
-    <Document
-      file={url}
-      onLoadSuccess={(pdf) => console.log(pdf, blob)}
-      renderMode="canvas"
-    >
-      <Page pageNumber={1} width={window.innerWidth} />
-    </Document>
   );
 };
 

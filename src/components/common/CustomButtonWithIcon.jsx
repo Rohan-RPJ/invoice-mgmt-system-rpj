@@ -10,6 +10,8 @@ import React from "react";
  * keepLabelIconGap: Default true
  *
  * borderColor: none if null
+ *
+ * showTextOnSmallScreens: Default false
  */
 const CustomButtonWithIcon = ({
   label,
@@ -26,15 +28,16 @@ const CustomButtonWithIcon = ({
   disabled,
   keepLabelIconGap,
   borderColor,
+  showTextOnSmallScreens,
 }) => {
   return (
     <div className={`w-full h-full`}>
       <button
         type={`${btnType ? btnType : "button"}`}
         onClick={handleOnClick}
-        className={`${btnWidth == null ? "w-40" : btnWidth} p-2 ${
+        className={`${btnWidth == null ? "w-20 md:w-40" : btnWidth} p-2 ${
           disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`
-        } rounded-md ${textColor} ${hoverTextColor} ${
+        } ${showTextOnSmallScreens ? "rounded-md" : "rounded-full"} md:rounded-md ${textColor} ${hoverTextColor} ${
           borderColor != null && `border-2 ${borderColor}`
         } group transition duration-150`}
         disabled={disabled ? disabled : false}
@@ -72,7 +75,7 @@ const CustomButtonWithIcon = ({
                   }`
                 : ""
             }
-            transition-all duration-150`}
+            transition-all duration-150 ${!showTextOnSmallScreens && "hidden"} md:block`}
           >
             {label}
           </span>
