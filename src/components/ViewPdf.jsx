@@ -24,19 +24,19 @@ const DynamicPDFViewer = dynamic(() => import("./PDFViewer"), {
 
 const ViewPdf = ({ doc: MyPdfDocument, pdfData, isMobileNav }) => {
   return isMobileNav ? (
-    // <DynamicBlobProvider document={<MyPdfDocument data={pdfData} />}>
-    //   {({ blob, url, loading }) => {
-    //     return loading ? "Loading Pdf..." : <DynamicPDFViewer url={url} />;
-    //   }}
-    // </DynamicBlobProvider>
-    <DynamicReactPdfViewer
+    <DynamicBlobProvider document={<MyPdfDocument data={pdfData} />}>
+      {({ blob, url, loading }) => {
+        return loading ? "Loading Pdf..." : <DynamicPDFViewer url={url} />;
+      }}
+    </DynamicBlobProvider>
+    {/* <DynamicReactPdfViewer
       width={"50%"}
       height="100%"
       className={`absolute`}
       showToolbar={false}
     >
       <MyPdfDocument data={pdfData} />
-    </DynamicReactPdfViewer>
+    </DynamicReactPdfViewer> */}
   ) : (
     <DynamicReactPdfViewer
       width={"50%"}
