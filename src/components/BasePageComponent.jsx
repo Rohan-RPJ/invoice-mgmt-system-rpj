@@ -12,12 +12,12 @@ const BasePageComponent = ({ pageContent: PageContent }) => {
 
   const [isMobileNav, setMobileNav] = useState(true);
 
-  function handleResize() {
+  const handleResize = () => {
     setDimensions({
       height: screen.height,
       width: screen.width,
     });
-  }
+  };
 
   useEffect(() => {
     setDimensions({
