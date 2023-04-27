@@ -28,12 +28,11 @@ const CustomFormInput = ({
   };
 
   return (
-    <div className="w-[60%] h-full flex flex-col gap-1">
+    <div className="w-[75%] sm:w-[60%] h-full flex flex-col gap-1">
       <div className={`w-full h-full relative`}>
         {InputIcon && (
           <InputIcon
-            width={34}
-            className={`pl-2 absolute m-auto top-1/2 bottom-1/2 text-gray-600`}
+            className={`w-[28px] sm:w-[34px] pl-2 absolute m-auto top-1/2 bottom-1/2 text-gray-600`}
           />
         )}
         <input
@@ -44,7 +43,7 @@ const CustomFormInput = ({
           defaultValue={defaultInputValue != null ? defaultInputValue : ""}
           {...otherAttr}
           className={`${inputStyleClass} ${
-            InputIcon && "pl-10"
+            InputIcon ? "pl-8 sm:pl-10" : "pl-2"
           } w-full text-black border-2 border-gray-300 transition-colors 
                 ease-in-out duration-300 outline-none shadow-sm 
                 ${
@@ -54,7 +53,7 @@ const CustomFormInput = ({
                     ? "border-green-600"
                     : "focus:border-sky-400"
                 }
-                px-2 py-3 rounded-md`}
+                pr-8 sm:pr-9 py-2 sm:py-3 rounded-md`}
           // styles={...styles}
           {...register(inputName, {
             ...inputValidations,
@@ -63,8 +62,7 @@ const CustomFormInput = ({
         />
         {formErrors[inputName] ? (
           <ExclamationCircleIcon
-            width={35}
-            className={`text-red-500 absolute right-0 top-1/2 bottom-1/2 m-auto pr-2`}
+            className={`w-[30px] sm:w-[35px] text-red-500 absolute right-0 top-1/2 bottom-1/2 m-auto pr-2`}
           />
         ) : (
           isFormSubmittedOnce &&

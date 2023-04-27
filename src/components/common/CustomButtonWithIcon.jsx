@@ -35,9 +35,9 @@ const CustomButtonWithIcon = ({
       <button
         type={`${btnType ? btnType : "button"}`}
         onClick={handleOnClick}
-        className={`${btnWidth == null ? "w-20 md:w-40" : btnWidth} p-2 ${
+        className={`${btnWidth == null ? `${!Icon && "w-28"} sm:w-40` : btnWidth} p-2 ${
           disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`
-        } ${showTextOnSmallScreens ? "rounded-md" : "rounded-full"} md:rounded-md ${textColor} ${hoverTextColor} ${
+        } ${showTextOnSmallScreens ? "rounded-md" : "rounded-full"} md:rounded-md ${textColor} ${hoverTextColor!=null && hoverTextColor} ${
           borderColor != null && `border-2 ${borderColor}`
         } group transition duration-150`}
         disabled={disabled ? disabled : false}

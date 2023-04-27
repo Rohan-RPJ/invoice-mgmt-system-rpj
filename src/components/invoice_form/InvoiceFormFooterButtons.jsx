@@ -14,7 +14,7 @@ const InvoiceFormFooterButtons = ({
   handleOnDownloadClick,
 }) => {
   return (
-    <div className="w-full h-full flex flex-row px-2 pt-4 pb-12 justify-between">
+    <div className="w-full h-full flex flex-row px-6 pt-4 pb-12 justify-between">
       <CustomButtonWithIcon
         label="Back"
         btnType="button"
@@ -22,12 +22,12 @@ const InvoiceFormFooterButtons = ({
         isIconFirst={true}
         doIconTransition={true}
         handleOnClick={handleOnBackClick}
-        bgColor="bg-gray-600"
+        bgColor="bg-blue-600"
         textColor="text-white"
         disabled={activeComponent === 0 ? true : false}
       />
 
-      <div className="w-full h-full flex flex-row justify-end items-center">
+      <div className="flex flex-row gap-8">
         <CustomButtonWithIcon
           label="Save"
           btnType={"submit"}
@@ -57,7 +57,7 @@ const InvoiceFormFooterButtons = ({
             isIconFirst={false}
             doIconTransition={false}
             handleOnClick={handleOnDownloadClick}
-            bgColor="bg-blue-600"
+            bgColor="bg-orange-600"
             hoverBgColor="hover:bg-blue-700"
             textColor="text-white"
             disabled={!enableNextBtn}

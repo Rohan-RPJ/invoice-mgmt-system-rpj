@@ -71,7 +71,7 @@ const BasePageComponent = ({ pageContent: PageContent }) => {
         )}
         {/* <Sidebar /> */}
 
-        <div className={`w-full h-full overflow-scroll scrollbar-hide`}>
+        <div className={`w-full h-full py-4 overflow-scroll scrollbar-hide`}>
           {/* Main Content */}
           <main className={`w-full h-full`}>
             <PageContent isMobileNav={isMobileNav} />

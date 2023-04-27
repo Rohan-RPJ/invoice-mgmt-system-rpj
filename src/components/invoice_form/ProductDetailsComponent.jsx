@@ -93,7 +93,7 @@ const ProductDetailsComponent = ({
         isFormSubmittedOnce={isFormSubmittedOnce}
       />
       <InputEnabledFieldComponent
-        labelName="Gst Percent"
+        labelName="GST %"
         inputType="number"
         inputName={id + "-gstPercent"}
         prefilledValue={prodDtls?.gstPercent}

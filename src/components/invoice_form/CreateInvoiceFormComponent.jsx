@@ -1,20 +1,31 @@
-import { useEffect, useState } from "react";
-import InputDisabledFieldComponent from "./InputDisableFieldComponent";
-import ProductDetailsComponent from "./ProductDetailsComponent";
-import CustomerDetailsComponent from "./CustomerDetailsComponent";
 import InvoiceJsonProcessor from "@/utilities/InvoiceJsonProcessor";
-import ViewPdf from "../ViewPdf";
-import Invoice from "../invoice/Invoice";
+import { isObjectEmpty } from "@/utilities/ObjectUtils";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
-import CustomModal from "../common/CustomModal";
+import ViewPdf from "../ViewPdf";
 import CustomFormModal from "../common/CustomFormModal";
-import { isObjectEmpty } from "@/utilities/ObjectUtils";
 import TableComponent from "../common/TableComponent";
+import Invoice from "../invoice/Invoice";
+import CustomerDetailsComponent from "./CustomerDetailsComponent";
+import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
+import ProductDetailsComponent from "./ProductDetailsComponent";
+import TodoList from "../common/TODOList";
 
 const CreateInvoiceFormComponent = ({ isMobileNav }) => {
+  // ask for confirmation if user does refresh
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "abc";
+      return "xyz";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
+
   const invoiceJsonProcessor = new InvoiceJsonProcessor();
   const [invoiceJsonData, setInvoiceJsonData] = useState(
     invoiceJsonProcessor.getEmptyInvoiceJson()
@@ -157,14 +168,8 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
 
   return (
     <div className="w-full h-full invoice-form">
-      <div
-        className={`w-full h-full flex ${
-          isMobileNav ? "flex-col" : "flex-row"
-        }`}
-      >
-        <div
-          className={`${isMobileNav ? "w-full" : "w-[50%] basis-1/2"} h-full`}
-        >
+      <div className={`w-full h-full flex flex-col-reverse lg:flex-row`}>
+        <div className={`w-full lg:w-[50%] lg:basis-1/2" h-full`}>
           {activeComponent === 0 && (
             <form
               onSubmit={custDtlHandleSubmit(onCustDtlSubmit)}
@@ -172,19 +177,20 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
             >
               <div className="w-full h-full">
                 {/* Invoice Number auto-generated */}
-                <InputDisabledFieldComponent
+                {/* <InputDisabledFieldComponent
                   labelName="Invoice Number"
                   inputType="text"
                   inputName="invoice_no"
                   inputValue={invoiceJsonData.invoice_no}
-                />
+                /> */}
                 {/* Invoice Date auto-generated */}
-                <InputDisabledFieldComponent
+                {/* <InputDisabledFieldComponent
                   labelName="Invoice Date"
                   inputType="text"
                   inputName="invoice_date"
                   inputValue={new Date().toLocaleDateString()}
-                />
+                /> */}
+
                 {/* Customer Details will be entered by User : Name, Addr, Mob, Email etc. */}
                 <CustomerDetailsComponent
                   register={custDtlRegister}
@@ -266,7 +272,7 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
           )}
         </div>
         <div
-          className={`${isMobileNav ? "w-full" : "w-[50%] basis-1/2"} h-full`}
+          className={`w-full lg:w-[50%] lg:basis-1/2 justify-center items-center my-auto h-full`}
         >
           <ViewPdf
             doc={Invoice}

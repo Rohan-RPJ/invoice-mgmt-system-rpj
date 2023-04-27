@@ -46,10 +46,10 @@ const ViewPdf = ({ doc: MyPdfDocument, pdfData, isMobileNav }) => {
     <DynamicBlobProvider document={<MyPdfDocument data={pdfData} />}>
       {({ blob, url, loading }) => {
         return loading ? (
-          "Loading Pdf..."
+          ""
         ) : (
           <DynamicPDFWorker workerUrl="https://unpkg.com/pdfjs-dist@3.5.141/build/pdf.worker.min.js">
-            <DynamicPDFViewer fileUrl={url} />;
+            <DynamicPDFViewer fileUrl={url} />
           </DynamicPDFWorker>
         );
       }}
