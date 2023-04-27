@@ -11,7 +11,6 @@ import Invoice from "../invoice/Invoice";
 import CustomerDetailsComponent from "./CustomerDetailsComponent";
 import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import ProductDetailsComponent from "./ProductDetailsComponent";
-import TodoList from "../common/TODOList";
 
 const CreateInvoiceFormComponent = ({ isMobileNav }) => {
   // ask for confirmation if user does refresh
