@@ -58,7 +58,7 @@ const InvoiceFormFooterButtons = ({
             doIconTransition={false}
             handleOnClick={handleOnDownloadClick}
             bgColor="bg-orange-600"
-            hoverBgColor="hover:bg-blue-700"
+            hoverBgColor="hover:bg-orange-700"
             textColor="text-white"
             disabled={!enableNextBtn}
           />

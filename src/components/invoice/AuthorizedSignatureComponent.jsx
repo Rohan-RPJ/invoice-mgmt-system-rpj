@@ -33,7 +33,7 @@ const AuthorizedSignatureComponent = ({ company }) => {
   return (
     <View style={styles.container}>
       <Text>
-        For <Text style={styles.company}>{company}:</Text>
+        For <Text style={styles.company}>{company}</Text>
       </Text>
       <View
         style={{

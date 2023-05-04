@@ -41,7 +41,7 @@ const BillFrom = ({ invoice }) => (
 
     {invoice.billFrom.gstRegstrtnNo && (
       <Text style={styles.gstRegstrtnNoContainer}>
-        <Text style={styles.label}>GST Registration No: </Text>
+        <Text style={styles.label}>GSTIN No: </Text>
         <Text>{invoice.billFrom.gstRegstrtnNo}</Text>
       </Text>
     )}

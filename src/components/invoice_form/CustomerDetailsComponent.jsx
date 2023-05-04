@@ -147,7 +147,7 @@ const CustomerDetailsComponent = ({
         inputStyleClass={`uppercase`}
       />
       <InputEnabledFieldComponent
-        labelName="GST Reg. No"
+        labelName="GSTIN No"
         inputType="text"
         inputName="gstRegstrtnNo"
         otherAttr={{

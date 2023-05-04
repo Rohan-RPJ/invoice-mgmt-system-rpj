@@ -39,3 +39,6 @@ body {
   input::placeholder { text-transform: none; }
 }
 
+html {
+  scroll-behavior: smooth;
+}

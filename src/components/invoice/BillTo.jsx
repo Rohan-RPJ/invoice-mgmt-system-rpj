@@ -33,14 +33,14 @@ const BillTo = ({ invoice }) => (
 
     <Text style={styles.panNoContainer}>
       {invoice.billTo.panNo && <Text style={styles.label}>PAN No: </Text>}
-      <Text>{invoice.billTo.panNo}</Text>
+      <Text style={{ textTransform: "uppercase" }}>{invoice.billTo.panNo}</Text>
     </Text>
 
     <Text style={styles.gstRegstrtnNoContainer}>
       {invoice.billTo.gstRegstrtnNo && (
-        <Text style={styles.label}>GST Registration No: </Text>
+        <Text style={styles.label}>GSTIN No: </Text>
       )}
-      <Text>{invoice.billTo.gstRegstrtnNo}</Text>
+      <Text style={{ textTransform: "uppercase" }}>{invoice.billTo.gstRegstrtnNo}</Text>
     </Text>
   </View>
 );

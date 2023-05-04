@@ -11,7 +11,6 @@ import Invoice from "../invoice/Invoice";
 import CustomerDetailsComponent from "./CustomerDetailsComponent";
 import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import ProductDetailsComponent from "./ProductDetailsComponent";
-import TodoList from "../common/TODOList";
 
 const CreateInvoiceFormComponent = ({ isMobileNav }) => {
   // ask for confirmation if user does refresh
@@ -118,6 +117,8 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
     customerDtls && invoiceJsonProcessor.processCustomerDtls(customerDtls);
     products && invoiceJsonProcessor.processInvoiceBill(products);
     setInvoiceJsonData({ ...invoiceJsonProcessor.getUpdatedInvoiceJson() });
+
+    window.scrollTo(0, 0); // scroll to top
   }, [customerDtls, products]);
 
   /////////////////
@@ -164,6 +165,8 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
 
   const handleOnNextClick = () => {
     setActiveComponent((prev) => prev + 1);
+
+    window.scrollTo(0, 0); // scroll to top
   };
 
   return (
