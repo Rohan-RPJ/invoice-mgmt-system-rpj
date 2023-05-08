@@ -32,12 +32,6 @@ const ProductDetailsComponent = ({
 
   return (
     <div className="w-full h-full flex flex-col">
-      {/* <CustomFormSectionTitleSubTitle
-        title={"Product Details"}
-        subtitle={
-          "Please enter Product/Item details"
-        }
-      /> */}
 
       <InputEnabledFieldComponent
         labelName="Description|DESC"

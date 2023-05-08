@@ -25,7 +25,7 @@ const CustomerDetailsComponent = ({
       <CustomFormSectionTitleSubTitle
         title={"Customer Details"}
         subtitle={
-          "Please enter Customer Details to whom you want to sell the Items."
+          "Enter Customer Details below to whom you want to sell the Items."
         }
       />
 

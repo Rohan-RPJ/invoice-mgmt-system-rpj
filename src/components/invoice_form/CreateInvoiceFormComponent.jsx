@@ -12,6 +12,7 @@ import CustomerDetailsComponent from "./CustomerDetailsComponent";
 import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import ProductDetailsComponent from "./ProductDetailsComponent";
 import ESignComponent from "../common/ESignComponent";
+import CustomFormSectionTitleSubTitle from "../common/CustomFormSectionTitleSubTitle";
 
 const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
   // ask for confirmation if user does refresh
@@ -115,8 +116,7 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
   const [eSignUrl, setESignUrl] = useState(null);
   const handleOnESignSaveClicked = () => {
     // set esign in invoice json to be used in pdf
-
-  }
+  };
 
   // if user updates/adds product details -> update invoiceJsonData supplied to pdf -> update pdf
   useEffect(() => {
@@ -228,17 +228,15 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
               // onSubmit={handleAllProductsSubmit(onProdDtlSubmit)}
               className={`w-full h-full`}
             >
-              <TableComponent
-                headDataObj={[
-                  { name: "desc" },
-                  { name: "rate" },
-                  { name: "qty" },
-                  { name: "gstPercent" },
-                ]}
-                bodyDataObj={products}
-                handleOnEditClicked={handleOnProdDtlsEditClicked}
-                handleOnDeleteClicked={handleOnProdDtlsDeleteClicked}
+              <CustomFormSectionTitleSubTitle
+                title={"Product Details"}
+                subtitle={
+                  "Add your Products by clicking on 'ADD NEW PRODUCT' below"
+                }
               />
+
+              <div className="p-2" />
+
               {editProductDtlsId != null && (
                 <CustomFormModal
                   id={editProductDtlsId}
@@ -274,6 +272,18 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
                 showModalOpenerBtn={true}
               />
 
+              <TableComponent
+                headDataObj={[
+                  { name: "desc" },
+                  { name: "rate" },
+                  { name: "qty" },
+                  { name: "gstPercent" },
+                ]}
+                bodyDataObj={products}
+                handleOnEditClicked={handleOnProdDtlsEditClicked}
+                handleOnDeleteClicked={handleOnProdDtlsDeleteClicked}
+              />
+
               <InvoiceFormFooterButtons
                 activeComponent={activeComponent}
                 enableNextBtn={products.length > 0}
@@ -287,7 +297,9 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
 
           {activeComponent === 2 && (
             <div>
-              <ESignComponent handleGetESignatureUrl={(eSignUrl) => setESignUrl(eSignUrl)}/>
+              <ESignComponent
+                handleGetESignatureUrl={(eSignUrl) => setESignUrl(eSignUrl)}
+              />
               <InvoiceFormFooterButtons
                 activeComponent={activeComponent}
                 enableNextBtn={eSignUrl !== null}

@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import ReactDOM from "react-dom";
 import SignaturePad from "react-signature-canvas";
+import CustomFormSectionTitleSubTitle from "./CustomFormSectionTitleSubTitle";
 
 const ESignComponent = ({ handleGetESignatureUrl }) => {
   const [trimmedDataURL, setTrimmedDataURL] = useState(null);
@@ -13,11 +14,15 @@ const ESignComponent = ({ handleGetESignatureUrl }) => {
     handleGetESignatureUrl(sigPad.getTrimmedCanvas().toDataURL("image/png"));
   };
   return (
-    <div className={"w-full h-full px-4"}>
+    <div className={"w-full h-full px-4 flex flex-col gap-2 md:gap-4"}>
+      <CustomFormSectionTitleSubTitle
+        title={"E-Signature"}
+        subtitle={"Please draw you signature in below box."}
+      />
       <div className={"w-full h-full"}>
         <SignaturePad
           canvasProps={{
-            className: "w-full h-full bg-white shadow-inner border-2 my-4",
+            className: "w-full h-[200px] bg-white shadow-inner border-2 my-4",
             placeholder: "cmbkgmev",
           }}
           ref={(ref) => {
