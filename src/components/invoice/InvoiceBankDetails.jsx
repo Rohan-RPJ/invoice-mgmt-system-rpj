@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     width: "65%",
   },
   bankDetailsLabel: {
-    fontWeight: "extrabold",
+    fontFamily: "Helvetica-Bold", 
+    fontSize: "11",
     borderRightColor: borderColor,
     borderRightWidth: 1,
     borderBottomColor: borderColor,
@@ -68,15 +69,15 @@ const InvoiceBankDetails = ({ bankDetails }) => {
         <Text style={styles.bankDetailsLabel}>Bank Details</Text>
         <View style={styles.bankDetailsDataView}>
           <Text style={styles.bankDetailsLabels}>Bank Name</Text>
-          <Text style={styles.bankDetailsDataText}>Bank Name</Text>
+          <Text style={styles.bankDetailsDataText}>Union Bank of India</Text>
         </View>
         <View style={styles.bankDetailsDataView}>
           <Text style={styles.bankDetailsLabels}>IFSC No</Text>
-          <Text style={styles.bankDetailsDataText}>IFSC No</Text>
+          <Text style={styles.bankDetailsDataText}>UBIN0568228</Text>
         </View>
         <View style={{ ...styles.bankDetailsDataView, borderBottomWidth: 0 }}>
           <Text style={styles.bankDetailsLabels}>Bank A/C No</Text>
-          <Text style={styles.bankDetailsDataText}>Bank A/C No</Text>
+          <Text style={styles.bankDetailsDataText}>682201010050017</Text>
         </View>
       </View>
       <View style={styles.upiDetailsContainer}>

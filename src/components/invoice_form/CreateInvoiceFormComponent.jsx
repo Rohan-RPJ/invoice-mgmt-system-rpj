@@ -11,8 +11,9 @@ import Invoice from "../invoice/Invoice";
 import CustomerDetailsComponent from "./CustomerDetailsComponent";
 import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import ProductDetailsComponent from "./ProductDetailsComponent";
+import ESignComponent from "../common/ESignComponent";
 
-const CreateInvoiceFormComponent = ({ isMobileNav }) => {
+const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
   // ask for confirmation if user does refresh
   useEffect(() => {
     const unloadCallback = (event) => {
@@ -25,7 +26,7 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
     return () => window.removeEventListener("beforeunload", unloadCallback);
   }, []);
 
-  const invoiceJsonProcessor = new InvoiceJsonProcessor();
+  const invoiceJsonProcessor = new InvoiceJsonProcessor(invoiceNo);
   const [invoiceJsonData, setInvoiceJsonData] = useState(
     invoiceJsonProcessor.getEmptyInvoiceJson()
   );
@@ -111,15 +112,23 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
     );
   };
 
+  const [eSignUrl, setESignUrl] = useState(null);
+  const handleOnESignSaveClicked = () => {
+    // set esign in invoice json to be used in pdf
+
+  }
+
   // if user updates/adds product details -> update invoiceJsonData supplied to pdf -> update pdf
   useEffect(() => {
     console.log("useEffect::Products::", products);
+    console.log("useEffect::eSignUrl::", eSignUrl);
     customerDtls && invoiceJsonProcessor.processCustomerDtls(customerDtls);
     products && invoiceJsonProcessor.processInvoiceBill(products);
+    eSignUrl && invoiceJsonProcessor.processESignature(eSignUrl);
     setInvoiceJsonData({ ...invoiceJsonProcessor.getUpdatedInvoiceJson() });
 
-    window.scrollTo(0, 0); // scroll to top
-  }, [customerDtls, products]);
+    if (isMobileNav) window.scrollTo(0, 0); // scroll to top
+  }, [customerDtls, products, eSignUrl]);
 
   /////////////////
   const {
@@ -199,6 +208,7 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
                   register={custDtlRegister}
                   formErrors={custDtlErrors}
                   isFormSubmittedOnce={isCustDtlFormSubmittedOnce}
+                  isMobileNav={isMobileNav}
                 />
                 <InvoiceFormFooterButtons
                   activeComponent={activeComponent}
@@ -257,6 +267,7 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
                 modalBodyAttr={{
                   id: products ? products.length : 0,
                   handleProdDetailChange: handleProdDetailChange,
+                  isMobileNav: isMobileNav,
                 }}
                 handleOnModalFormSubmit={handleProdDetailChange}
                 handleOnModalClose={handleOnProdDtlsModalClose}
@@ -269,6 +280,19 @@ const CreateInvoiceFormComponent = ({ isMobileNav }) => {
                 handleOnBackClick={() => handleOnBackClick()}
                 handleOnNextClick={() => handleOnNextClick()}
                 // handleOnSaveClick={() => setIsProdDtlFormSubmittedOnce(true)}
+                // handleOnDownloadClick={() => handleOnDownloadClick()}
+              />
+            </div>
+          )}
+
+          {activeComponent === 2 && (
+            <div>
+              <ESignComponent handleGetESignatureUrl={(eSignUrl) => setESignUrl(eSignUrl)}/>
+              <InvoiceFormFooterButtons
+                activeComponent={activeComponent}
+                enableNextBtn={eSignUrl !== null}
+                handleOnBackClick={() => handleOnBackClick()}
+                handleOnSaveClick={() => handleOnESignSaveClicked()}
                 handleOnDownloadClick={() => handleOnDownloadClick()}
               />
             </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import { TableContants } from "../../constants/InvoiceContants";
 
 const borderColor = TableContants.borderColor;
@@ -27,9 +27,16 @@ const styles = StyleSheet.create({
   company: {
     textTransform: "uppercase",
   },
+  eSignUrl: {
+    backgroundSize: "200px 50px",
+    width: "30%",
+    height: "50px",
+    backgroundColor: "#E8E8E8",
+    float: "right",
+  },
 });
 
-const AuthorizedSignatureComponent = ({ company }) => {
+const AuthorizedSignatureComponent = ({ company, eSignUrl }) => {
   return (
     <View style={styles.container}>
       <Text>
@@ -44,9 +51,13 @@ const AuthorizedSignatureComponent = ({ company }) => {
         }}
       >
         <Text style={{ width: "70%" }}></Text>
-        <Text style={{ backgroundColor: "#E8E8E8", width: "30%" }}>
-          {"\n\n"}
-        </Text>
+        {eSignUrl ? (
+          <Image style={styles.eSignUrl} src={eSignUrl} />
+        ) : (
+          <Text style={{ backgroundColor: "#E8E8E8", width: "30%" }}>
+            {"\n\n"}
+          </Text>
+        )}
       </View>
       <Text>Authorized Signatory</Text>
     </View>

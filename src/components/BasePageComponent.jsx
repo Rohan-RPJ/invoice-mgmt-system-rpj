@@ -4,7 +4,7 @@ import Sidebar from "./common/Sidebar";
 import Footer from "./common/Footer";
 import Head from "next/head";
 
-const BasePageComponent = ({ pageContent: PageContent }) => {
+const BasePageComponent = ({ pageContent: PageContent, pageProps }) => {
   const [dimensions, setDimensions] = useState({
     height: null,
     width: null,
@@ -74,7 +74,7 @@ const BasePageComponent = ({ pageContent: PageContent }) => {
         <div className={`w-full h-full py-4 overflow-scroll scrollbar-hide`}>
           {/* Main Content */}
           <main className={`w-full h-full`}>
-            <PageContent isMobileNav={isMobileNav} />
+            <PageContent isMobileNav={isMobileNav} {...pageProps} />
           </main>
 
           {/* Footer */}

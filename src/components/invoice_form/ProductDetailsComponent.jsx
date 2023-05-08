@@ -11,6 +11,7 @@ const ProductDetailsComponent = ({
   register,
   formErrors,
   isFormSubmittedOnce,
+  isMobileNav,
 }) => {
   const handleOnChange = (prodName, prodValue) => {
     // handleProdDetailChange(id, prodName.split("-")[1], prodValue);
@@ -39,7 +40,7 @@ const ProductDetailsComponent = ({
       /> */}
 
       <InputEnabledFieldComponent
-        labelName="Description"
+        labelName="Description|DESC"
         inputType="text"
         inputName={id + "-desc"}
         prefilledValue={prodDtls?.desc}
@@ -55,9 +56,11 @@ const ProductDetailsComponent = ({
         }}
         formErrors={formErrors}
         isFormSubmittedOnce={isFormSubmittedOnce}
+        doFocus={true}
+        isMobileNav={isMobileNav}
       />
       <InputEnabledFieldComponent
-        labelName="Unit Price"
+        labelName="Unit Price|PRICE"
         inputType="number"
         inputName={id + "-rate"}
         prefilledValue={prodDtls?.rate}
@@ -73,9 +76,10 @@ const ProductDetailsComponent = ({
         }}
         formErrors={formErrors}
         isFormSubmittedOnce={isFormSubmittedOnce}
+        isMobileNav={isMobileNav}
       />
       <InputEnabledFieldComponent
-        labelName="Quantity"
+        labelName="Quantity|QTY"
         inputType="number"
         inputName={id + "-qty"}
         prefilledValue={prodDtls?.qty}
@@ -91,6 +95,7 @@ const ProductDetailsComponent = ({
         }}
         formErrors={formErrors}
         isFormSubmittedOnce={isFormSubmittedOnce}
+        isMobileNav={isMobileNav}
       />
       <InputEnabledFieldComponent
         labelName="GST %"

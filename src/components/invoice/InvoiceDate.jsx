@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   invoiceDateContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    width: "100%"
+    width: "100%",
   },
   invoiceDate: {
     fontSize: 12,

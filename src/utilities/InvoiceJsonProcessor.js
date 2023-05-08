@@ -1,10 +1,10 @@
 class InvoiceJsonProcessor {
   #emptyInvoiceJson;
 
-  constructor() {
+  constructor(invoiceNo) {
     this.#emptyInvoiceJson = {
       id: "5df3180a09ea16dc4b95f910",
-      invoice_no: "201906-28",
+      invoice_no: invoiceNo,
       balance: "$2,283.74",
       billFrom: {
         company: "VAISHALI SALES & SERVICES",
@@ -13,7 +13,7 @@ class InvoiceJsonProcessor {
         address:
           "Shop no. 10, Shivgiri Apartment, Viva Girivihar Complex, Manvel Pada Road, Virar(E), Palghar-401305",
         panNo: "ABCD234OPD",
-        gstRegstrtnNo: "AAXMD344SOWK",
+        gstRegstrtnNo: "27ACLPJ2806J2ZH",
       },
       billTo: {
         company: "",
@@ -23,7 +23,7 @@ class InvoiceJsonProcessor {
         panNo: "",
         gstRegstrtnNo: "",
       },
-      trans_date: "2019-09-12",
+      trans_date: new Date().toLocaleDateString(),
       due_date: "2019-10-12",
       items: [
         {
@@ -34,7 +34,7 @@ class InvoiceJsonProcessor {
         },
       ],
       bankDetails: {
-        upiQrImg: process.env.IMAGE_BASE_URL + "upiQr.png",
+        // upiQrImg: process.env.IMAGE_BASE_URL + "upiQr.png",
       },
     };
     this.invoiceJson = { ...this.#emptyInvoiceJson };
@@ -65,6 +65,10 @@ class InvoiceJsonProcessor {
 
   processCustomerDtls(customerDtls) {
     this.invoiceJson.billTo = { ...customerDtls };
+  }
+
+  processESignature(eSignUrl) {
+    this.invoiceJson.eSignUrl = eSignUrl;
   }
 
   getUpdatedItems() {

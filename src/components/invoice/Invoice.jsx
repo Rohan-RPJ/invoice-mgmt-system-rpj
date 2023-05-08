@@ -75,7 +75,10 @@ const Invoice = ({ data: invoice }) => {
         </View>
         <InvoiceItemsTable invoice={invoice} />
         <TermsAndConditions />
-        <AuthorizedSignatureComponent company={invoice.billFrom.company} />
+        <AuthorizedSignatureComponent
+          company={invoice.billFrom.company}
+          eSignUrl={invoice.eSignUrl}
+        />
         <InvoiceThankYouMsg />
       </Page>
     </Document>

@@ -17,6 +17,7 @@ const CustomFormInput = ({
   styles,
   inputIcon: InputIcon,
   inputStyleClass,
+  doFocus,
 }) => {
   const [isInputValNullEmpty, setIsInputValNullEmpty] = useState(true);
 
@@ -36,7 +37,7 @@ const CustomFormInput = ({
           />
         )}
         <input
-          autoFocus
+          autoFocus={doFocus == null ? false : doFocus}
           autoComplete="off"
           type={inputType}
           name={inputName}

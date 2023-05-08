@@ -1,6 +1,7 @@
 import CustomFormInput from "../common/CustomFormInput";
 
 const InputEnabledFieldComponent = ({
+  isMobileNav,
   labelName,
   inputType,
   inputName,
@@ -14,12 +15,15 @@ const InputEnabledFieldComponent = ({
   styles,
   inputIcon,
   inputStyleClass,
+  doFocus
 }) => {
+  let screenSpecificLabelNames = labelName.split("|")
+  screenSpecificLabelNames = screenSpecificLabelNames.length === 2 ? screenSpecificLabelNames : [screenSpecificLabelNames[0], screenSpecificLabelNames[0]] 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
       <div className="w-full h-full flex flex-row justify-between p-4 pb-6">
         <label>
-          {labelName}{" "}
+          {isMobileNav ? screenSpecificLabelNames[1] : screenSpecificLabelNames[0]}{" "}
           {inputValidations?.required != null &&
             inputValidations.required != false && (
               <span className="text-red-600">*</span>
@@ -38,6 +42,7 @@ const InputEnabledFieldComponent = ({
           isFormSubmittedOnce={isFormSubmittedOnce}
           inputIcon={inputIcon}
           inputStyleClass={inputStyleClass}
+          doFocus={doFocus}
         />
       </div>
       <hr className={`w-[97%]`} />

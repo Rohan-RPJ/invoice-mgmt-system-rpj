@@ -13,6 +13,7 @@ const CustomerDetailsComponent = ({
   register,
   formErrors,
   isFormSubmittedOnce,
+  isMobileNav,
 }) => {
   const handleOnChange = (inputName, inputValue) => {
     // setCustName(inputValue);
@@ -51,6 +52,7 @@ const CustomerDetailsComponent = ({
         handleOnChange={handleOnChange}
         isFormSubmittedOnce={isFormSubmittedOnce}
         inputIcon={UserIcon}
+        doFocus={true}
       />
       <InputEnabledFieldComponent
         labelName="Address"
@@ -72,7 +74,7 @@ const CustomerDetailsComponent = ({
         inputIcon={IdentificationIcon}
       />
       <InputEnabledFieldComponent
-        labelName="Mobile No"
+        labelName="Mobile No|Mobile"
         inputType="number"
         inputName="mobileNo"
         otherAttr={{
@@ -94,9 +96,10 @@ const CustomerDetailsComponent = ({
         handleOnChange={handleOnChange}
         isFormSubmittedOnce={isFormSubmittedOnce}
         inputIcon={PhoneIcon}
+        isMobileNav={isMobileNav}
       />
       <InputEnabledFieldComponent
-        labelName="Email Id"
+        labelName="Email Id|Email"
         inputType="text"
         inputName="email"
         otherAttr={{
@@ -117,6 +120,7 @@ const CustomerDetailsComponent = ({
         handleOnChange={handleOnChange}
         isFormSubmittedOnce={isFormSubmittedOnce}
         inputIcon={EnvelopeIcon}
+        isMobileNav={isMobileNav}
       />
       <InputEnabledFieldComponent
         labelName="Pan No"

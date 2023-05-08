@@ -5,12 +5,16 @@ import {
 } from "@/utilities/InvoiceJsonProcessor";
 import { useState } from "react";
 import CreateInvoiceFormComponent from "./invoice_form/CreateInvoiceFormComponent";
+import getInvoiceNo from "./../utilities/GetInvoiceNo";
 
-const CreateInvoiceMainComponent = ({ isMobileNav }) => {
+const CreateInvoiceMainComponent = ({ invoiceNo, isMobileNav }) => {
   return (
     <div className={`w-full h-full`}>
       <div className={``}>
-        <CreateInvoiceFormComponent isMobileNav={isMobileNav} />
+        <CreateInvoiceFormComponent
+          isMobileNav={isMobileNav}
+          invoiceNo={invoiceNo}
+        />
       </div>
     </div>
   );

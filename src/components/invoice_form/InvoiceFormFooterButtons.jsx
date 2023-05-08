@@ -14,18 +14,20 @@ const InvoiceFormFooterButtons = ({
   handleOnDownloadClick,
 }) => {
   return (
-    <div className="w-full h-full flex flex-row px-6 pt-4 pb-12 justify-between">
-      <CustomButtonWithIcon
-        label="Back"
-        btnType="button"
-        icon={ArrowLongLeftIcon}
-        isIconFirst={true}
-        doIconTransition={true}
-        handleOnClick={handleOnBackClick}
-        bgColor="bg-blue-600"
-        textColor="text-white"
-        disabled={activeComponent === 0 ? true : false}
-      />
+    <div className="w-full h-full flex flex-row px-6 pt-4 pb-12 justify-end">
+      {activeComponent !== 0 && (
+        <CustomButtonWithIcon
+          label="Back"
+          btnType="button"
+          icon={ArrowLongLeftIcon}
+          isIconFirst={true}
+          doIconTransition={true}
+          handleOnClick={handleOnBackClick}
+          bgColor="bg-blue-600"
+          textColor="text-white"
+          disabled={activeComponent === 0 ? true : false}
+        />
+      )}
 
       <div className="flex flex-row gap-8">
         <CustomButtonWithIcon
@@ -37,7 +39,7 @@ const InvoiceFormFooterButtons = ({
           textColor="text-white"
           showTextOnSmallScreens={true}
         />
-        {activeComponent < 1 ? (
+        {activeComponent < 2 ? (
           <CustomButtonWithIcon
             label="Next"
             btnType="button"
