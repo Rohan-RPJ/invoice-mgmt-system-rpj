@@ -290,12 +290,12 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
                 handleOnBackClick={() => handleOnBackClick()}
                 handleOnNextClick={() => handleOnNextClick()}
                 // handleOnSaveClick={() => setIsProdDtlFormSubmittedOnce(true)}
-                // handleOnDownloadClick={() => handleOnDownloadClick()}
+                handleOnDownloadClick={() => handleOnDownloadClick()}
               />
             </div>
           )}
 
-          {activeComponent === 2 && (
+          {/* {activeComponent === 2 && (
             <div>
               <ESignComponent
                 handleGetESignatureUrl={(eSignUrl) => setESignUrl(eSignUrl)}
@@ -308,7 +308,7 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
                 handleOnDownloadClick={() => handleOnDownloadClick()}
               />
             </div>
-          )}
+          )} */}
         </div>
         <div
           className={`w-full lg:w-[50%] lg:basis-1/2 justify-center items-center my-auto h-full`}

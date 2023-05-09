@@ -36,6 +36,7 @@ class InvoiceJsonProcessor {
       bankDetails: {
         upiQrImg: process.env.IMAGE_BASE_URL + "vss-upiQr.jpeg",
       },
+      eSignUrl: process.env.IMAGE_BASE_URL + "eSignUrl.jpeg",
     };
     this.invoiceJson = { ...this.#emptyInvoiceJson };
   }

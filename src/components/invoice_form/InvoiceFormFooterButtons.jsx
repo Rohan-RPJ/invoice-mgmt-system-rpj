@@ -39,7 +39,7 @@ const InvoiceFormFooterButtons = ({
           textColor="text-white"
           showTextOnSmallScreens={true}
         />
-        {activeComponent < 2 ? (
+        {activeComponent < 1 ? (
           <CustomButtonWithIcon
             label="Next"
             btnType="button"
