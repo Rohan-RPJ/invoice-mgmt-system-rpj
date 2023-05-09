@@ -12,7 +12,7 @@ class InvoiceJsonProcessor {
         mobileNo: "9834203564",
         address:
           "Shop no. 10, Shivgiri Apartment, Viva Girivihar Complex, Manvel Pada Road, Virar(E), Palghar-401305",
-        panNo: "ABCD234OPD",
+        panNo: "ACLPJ2806J",
         gstRegstrtnNo: "27ACLPJ2806J2ZH",
       },
       billTo: {
@@ -34,7 +34,7 @@ class InvoiceJsonProcessor {
         },
       ],
       bankDetails: {
-        // upiQrImg: process.env.IMAGE_BASE_URL + "upiQr.png",
+        upiQrImg: process.env.IMAGE_BASE_URL + "vss-upiQr.jpeg",
       },
     };
     this.invoiceJson = { ...this.#emptyInvoiceJson };
