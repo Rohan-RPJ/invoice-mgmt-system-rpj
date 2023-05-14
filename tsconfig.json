@@ -1,0 +1,16 @@
+{
+    "include": [
+      "next-env.d.ts",
+      "**/*.ts",
+      "**/*.tsx"
+    ],
+    "exclude": [
+      "node_modules"
+    ],
+    "ts-node": {
+      "compilerOptions": {
+        "module": "CommonJS",
+        "allowJs": true
+      }
+    }
+  }
