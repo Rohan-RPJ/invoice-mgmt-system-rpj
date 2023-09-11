@@ -1,7 +1,7 @@
 var PropertiesReader = require("properties-reader");
 // import {PropertiesReader} from "properties-reader";
 
-var filePath = "./props/invoiceno.properties";
+var filePath = "/props/invoiceno.properties";
 var properties = PropertiesReader(filePath);
 class GetInvoiceNo {
   constructor() {}
