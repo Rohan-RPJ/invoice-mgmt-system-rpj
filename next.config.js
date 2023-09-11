@@ -32,10 +32,44 @@ const nextConfig = {
       ],
     });
 
+    config.resolve.fallback = { fs: false };
+
     return config;
   },
   env: {
     IMAGE_BASE_URL: process.env.IMAGE_BASE_URL,
+  },
+  images: {
+    domains: ["localhost", "lh3.googleusercontent.com", "drive.google.com"],
+    path: "/_next/image",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        // pathname: '/account123/**',
+      },
+      // {
+      //   protocol: "https",
+      //   hostname: "facebook.com",
+      //   port: "",
+      // },
+      // {
+      //   protocol: "https",
+      //   hostname: "drive.google.com",
+      //   port: "",
+      // },
+      // {
+      //   protocol: "https",
+      //   hostname: "fb-clone-project.vercel.app",
+      //   port: "",
+      // },
+      // {
+      //   protocol: "https",
+      //   hostname: "youtube.com",
+      //   port: "",
+      // },
+    ],
   },
 };
 

@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Header from "./common/Header";
-import Sidebar from "./common/Sidebar";
-import Footer from "./common/Footer";
+import Header from "../common/Header";
+import Sidebar from "../common/Sidebar";
+import Footer from "../common/Footer";
 import Head from "next/head";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
-const BasePageComponent = ({ pageContent: PageContent, pageProps }) => {
+const BasePageComponent = ({
+  pageContent: PageContent,
+  pageProps,
+}) => {
+
+  const { user } = useUser();
+    console.log("user", user);
+
   const [dimensions, setDimensions] = useState({
     height: null,
     width: null,
@@ -65,7 +73,14 @@ const BasePageComponent = ({ pageContent: PageContent, pageProps }) => {
       <div className={`w-full h-full`}>
         {/* Header for Large Screens | Sidebar for small mobile screens */}
         {dimensions.width > 622 ? (
-          <Header scrolled={scrolled} isMobileNav={false} />
+          <Header
+            scrolled={scrolled}
+            isMobileNav={false}
+            isLoggedInUser={user ? true : false}
+            userFirstName={user?.given_name}
+            userEmail={user?.email}
+            userImage={user?.picture}
+          />
         ) : (
           <Sidebar scrolled={scrolled} isMobileNav={true} />
         )}

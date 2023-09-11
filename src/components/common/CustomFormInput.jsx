@@ -52,7 +52,7 @@ const CustomFormInput = ({
                     ? "border-red-600"
                     : isFormSubmittedOnce && !isInputValNullEmpty
                     ? "border-green-600"
-                    : "focus:border-sky-400"
+                    : "focus:border-blue-600"
                 }
                 pr-8 sm:pr-9 py-2 sm:py-3 rounded-md`}
           // styles={...styles}

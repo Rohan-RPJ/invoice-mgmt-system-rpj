@@ -13,6 +13,9 @@ import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import ProductDetailsComponent from "./ProductDetailsComponent";
 import ESignComponent from "../common/ESignComponent";
 import CustomFormSectionTitleSubTitle from "../common/CustomFormSectionTitleSubTitle";
+// import useSWR, { mutate } from "swr";
+
+// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
   // ask for confirmation if user does refresh
@@ -152,6 +155,12 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
     }
   };
 
+  // const updateInvoiceSeqNo = async () => {
+  //   const newName = user.name.toUpperCase();
+  //   await updateNameInDB(newName);
+  //   mutate("/api/user", { ...user, name: newName });
+  // };
+
   const handleOnDownloadClick = () => {
     // it means all data is entered by user and also validated
 
@@ -160,6 +169,16 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
       .then((blob) =>
         saveAs(blob, customerDtls.company + "-" + invoiceJsonData.invoice_no)
       );
+
+    // const { data, error } = useSWR("/api/invoice/update-seqno", fetcher);
+    // update invoice seqno
+    fetch("/api/invoice/update-seqno", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ invoiceNo: invoiceJsonData.invoice_no }),
+    });
   };
 
   const [isCustDtlFormSubmittedOnce, setIsCustDtlFormSubmittedOnce] =

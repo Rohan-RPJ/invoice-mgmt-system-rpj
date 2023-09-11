@@ -1,18 +1,37 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
+import {
+  ArrowRightOnRectangleIcon,
+  Cog6ToothIcon,
+  ShareIcon,
+  UsersIcon,
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
 import PropTypes from "prop-types";
+import LinkWithImage from "./LinkWithImage";
+import DropdownWithImage from "./DropdownWithImage";
 
-const Header = ({ scrolled, isMobileNav, showSideBarHandler }) => {
+const Header = ({
+  scrolled,
+  isMobileNav,
+  showSideBarHandler,
+  isLoggedInUser,
+  userFirstName,
+  userEmail,
+  userImage,
+}) => {
   return (
-    <header className={`sticky top-0 z-50 bg-white w-full min-w-max h-full`}>
+    <header className={`sticky top-0 z-50 bg-white w-full min-w-max h-full py-1`}>
       <div
-        className={`flex items-center ${
+        className={`w-full h-full flex items-center ${
           isMobileNav
             ? "justify-between px-2 py-[3px]"
             : "justify-center space-x-16 py-[10px]"
-        } w-full ${scrolled && "shadow-sm shadow-gray-500"}`}
+        } w-full ${
+          scrolled ? "shadow-sm shadow-gray-500" : "shadow-sm shadow-gray-400"
+        }`}
       >
-        <div className={`min-w-max pl-1 -translate-y-0.5 cursor-pointer`}>
+        <div className={`pl-5 min-w-max pl-1 -translate-y-0.5 cursor-pointer`}>
           <Image
             src={process.env.IMAGE_BASE_URL + "logo.svg"}
             width={`${isMobileNav ? "20" : "25"}`}
@@ -32,16 +51,42 @@ const Header = ({ scrolled, isMobileNav, showSideBarHandler }) => {
             onClick={() => showSideBarHandler()}
           />
         ) : (
-          ["Home", "Create Invoice"].map((headerLinkName, index) => {
-            return (
-              <p
-                key={index}
-                className={`font-sans font-normal whitespace-nowrap text-black text-base cursor-pointer hover:text-gigas`}
-              >
-                {headerLinkName}
-              </p>
-            );
-          })
+          <div className={`w-full h-full flex flex-row items-center justify-between`}>
+            <div className={`w-full h-full flex justify-start gap-8`}>
+            <LinkWithImage label={"Home"} link={"/"} />
+            {isLoggedInUser && (
+              <LinkWithImage
+                label={"Create Invoice"}
+                link={"/invoice/create"}
+              />
+            )}
+            </div>
+            <div className={`w-full h-full flex justify-end gap-8 pr-5`}>
+            {!isLoggedInUser && (
+              <LinkWithImage label={"Login"} link={"/api/auth/login"} />
+            )}
+            {isLoggedInUser && (
+              <DropdownWithImage
+                ddImage={userImage}
+                ddText={"Hello, " + (userFirstName ? userFirstName : "User")}
+                ddItems={[
+                  { Icon: UsersIcon, text: "Find Friends" },
+                  {
+                    Icon: ArrowRightOnRectangleIcon,
+                    text: "Sign out",
+                    link: "/api/auth/logout",
+                  },
+                  { Icon: ShareIcon, text: "Share" },
+                  {
+                    Icon: ArrowRightOnRectangleIcon,
+                    text: "Sign Out",
+                    onClickHandler: () => signOut(),
+                  },
+                ]}
+              />
+            )}
+            </div>
+          </div>
         )}
       </div>
     </header>
