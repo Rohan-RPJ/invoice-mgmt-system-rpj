@@ -1,3 +1,0 @@
-1. Migrate DB from prisma schema (and also seed db): npx prisma migrate dev --name init
-2. Seed DB: npx prisma db seed
-3. To view db data in prisma studio gui: npx prisma studio
