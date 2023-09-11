@@ -1,6 +1,6 @@
 var PropertiesReader = require("properties-reader");
 
-var filePath = "public/props/invoiceno.properties";
+var filePath = "./props/invoiceno.properties";
 var properties = PropertiesReader(filePath, { writer: { saveSections: true } });
 
 class UpdateInvoiceSeqNo {
