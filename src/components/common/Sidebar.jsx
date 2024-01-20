@@ -63,10 +63,11 @@ const Sidebar = ({ scrolled, isMobileNav, isLoggedInUser }) => {
             ? [
                 { text: "Home", link: "/" },
                 { text: "Create Invoice", link: "/invoice/create" },
+                { text: "Sign Out", link: "/api/auth/logout" },
               ]
             : [
                 { text: "Home", link: "/" },
-                { text: "Sign Out", link: "/api/auth/logout" },
+                { text: "Sign In", link: "/api/auth/login" },
               ]
           ).map(({ text, link }, index) => {
             return (
