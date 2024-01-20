@@ -106,18 +106,18 @@ const Header = ({
                   ddImage={userImage}
                   ddText={"Hello, " + (userFirstName ? userFirstName : "User")}
                   ddItems={[
-                    { Icon: UsersIcon, text: "Find Friends" },
+                    // { Icon: UsersIcon, text: "Find Friends" },
                     {
                       Icon: ArrowRightOnRectangleIcon,
                       text: "Sign out",
                       link: "/api/auth/logout",
                     },
-                    { Icon: ShareIcon, text: "Share" },
-                    {
-                      Icon: ArrowRightOnRectangleIcon,
-                      text: "Sign Out",
-                      onClickHandler: () => signOut(),
-                    },
+                    // { Icon: ShareIcon, text: "Share" },
+                    // {
+                    //   Icon: ArrowRightOnRectangleIcon,
+                    //   text: "Sign Out",
+                    //   onClickHandler: () => signOut(),
+                    // },
                   ]}
                 />
               )}
