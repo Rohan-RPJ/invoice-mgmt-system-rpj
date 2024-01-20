@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Header from "./Header";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import LinkWithImage from './LinkWithImage';
 
-const Sidebar = ({ scrolled, isMobileNav }) => {
+const Sidebar = ({ scrolled, isMobileNav, isLoggedInUser }) => {
   const [showSideBar, setShowSideBar] = useState(false);
 
   const showSideBarHandler = () => {
@@ -50,16 +51,24 @@ const Sidebar = ({ scrolled, isMobileNav }) => {
         </div>
 
         <div className={`w-full flex flex-col space-y-5 py-5`}>
-          {[
-            "Home",
+          {/* "Home",
             "Business Solutions",
             "Press",
             "Careers",
             "About Us",
             "Blog",
             "Contact Us",
-            "Trust & Safety",
-          ].map((text, index) => {
+            "Trust & Safety", */}
+          {(isLoggedInUser
+            ? [
+                { text: "Home", link: "/" },
+                { text: "Create Invoice", link: "/invoice/create" },
+              ]
+            : [
+                { text: "Home", link: "/" },
+                { text: "Sign Out", link: "/api/auth/logout" },
+              ]
+          ).map(({ text, link }, index) => {
             return (
               <div
                 key={index}
@@ -71,7 +80,7 @@ const Sidebar = ({ scrolled, isMobileNav }) => {
                 <span
                   className={`text-base font-[500] text-black group-hover:text-[#6739b7]`}
                 >
-                  {text}
+                  <LinkWithImage label={text} link={link} />
                 </span>
               </div>
             );
