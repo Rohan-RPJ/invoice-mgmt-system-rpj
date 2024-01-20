@@ -5,13 +5,9 @@ import Footer from "../common/Footer";
 import Head from "next/head";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
-const BasePageComponent = ({
-  pageContent: PageContent,
-  pageProps,
-}) => {
-
+const BasePageComponent = ({ pageContent: PageContent, pageProps }) => {
   const { user } = useUser();
-    console.log("user", user);
+  console.log("user", user);
 
   const [dimensions, setDimensions] = useState({
     height: null,
@@ -82,7 +78,11 @@ const BasePageComponent = ({
             userImage={user?.picture}
           />
         ) : (
-          <Sidebar scrolled={scrolled} isMobileNav={true} />
+          <Sidebar
+            scrolled={scrolled}
+            isMobileNav={true}
+            isLoggedInUser={user ? true : false}
+          />
         )}
         {/* <Sidebar /> */}
 
