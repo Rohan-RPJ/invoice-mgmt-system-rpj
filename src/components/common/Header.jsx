@@ -1,4 +1,9 @@
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import {
+  Bars3Icon,
+  BuildingLibraryIcon,
+  BuildingOffice2Icon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/solid";
 import {
   ArrowRightOnRectangleIcon,
   Cog6ToothIcon,
@@ -21,7 +26,9 @@ const Header = ({
   userImage,
 }) => {
   return (
-    <header className={`sticky top-0 z-50 bg-white w-full min-w-max h-full py-1`}>
+    <header
+      className={`sticky top-0 z-50 bg-white w-full min-w-max h-full py-1`}
+    >
       <div
         className={`w-full h-full flex items-center ${
           isMobileNav
@@ -51,40 +58,69 @@ const Header = ({
             onClick={() => showSideBarHandler()}
           />
         ) : (
-          <div className={`w-full h-full flex flex-row items-center justify-between`}>
+          <div
+            className={`w-full h-full flex flex-row items-center justify-between`}
+          >
             <div className={`w-full h-full flex justify-start gap-8`}>
-            <LinkWithImage label={"Home"} link={"/"} />
-            {isLoggedInUser && (
-              <LinkWithImage
-                label={"Create Invoice"}
-                link={"/invoice/create"}
-              />
-            )}
+              <LinkWithImage label={"Home"} link={"/"} />
+              {isLoggedInUser && (
+                <>
+                  {/* <DropdownWithImage
+                    showDDIcon={false}
+                    ddText={"My Company Details"}
+                    ddItems={[
+                      {
+                        Icon: BuildingOffice2Icon,
+                        text: "Basic Details",
+                        link: "/mycompany/basicdetails",
+                        onClickHandler: () => console.log("Basic Details"),
+                      },
+                      {
+                        Icon: BuildingLibraryIcon,
+                        text: "Bank Details",
+                        link: "/mycompany/bankdetails",
+                        onClickHandler: () => console.log("Bank Details"),
+                      },
+                      {
+                        Icon: PencilSquareIcon,
+                        text: "Capture E-Signature",
+                        link: "/mycompany/esign",
+                        onClickHandler: () =>
+                          console.log("Capture E-Signature"),
+                      },
+                    ]}
+                  /> */}
+                  <LinkWithImage
+                    label={"Create Invoice"}
+                    link={"/invoice/create"}
+                  />
+                </>
+              )}
             </div>
             <div className={`w-full h-full flex justify-end gap-8 pr-5`}>
-            {!isLoggedInUser && (
-              <LinkWithImage label={"Login"} link={"/api/auth/login"} />
-            )}
-            {isLoggedInUser && (
-              <DropdownWithImage
-                ddImage={userImage}
-                ddText={"Hello, " + (userFirstName ? userFirstName : "User")}
-                ddItems={[
-                  { Icon: UsersIcon, text: "Find Friends" },
-                  {
-                    Icon: ArrowRightOnRectangleIcon,
-                    text: "Sign out",
-                    link: "/api/auth/logout",
-                  },
-                  { Icon: ShareIcon, text: "Share" },
-                  {
-                    Icon: ArrowRightOnRectangleIcon,
-                    text: "Sign Out",
-                    onClickHandler: () => signOut(),
-                  },
-                ]}
-              />
-            )}
+              {!isLoggedInUser && (
+                <LinkWithImage label={"Login"} link={"/api/auth/login"} />
+              )}
+              {isLoggedInUser && (
+                <DropdownWithImage
+                  ddImage={userImage}
+                  ddText={"Hello, " + (userFirstName ? userFirstName : "User")}
+                  ddItems={[
+                    { Icon: UsersIcon, text: "Find Friends" },
+                    {
+                      Icon: ArrowRightOnRectangleIcon,
+                      text: "Sign out",
+                      link: "/api/auth/logout",
+                    },
+                    { Icon: ShareIcon, text: "Share" },
+                    {
+                      Icon: ArrowRightOnRectangleIcon,
+                      text: "Sign Out",
+                      onClickHandler: () => signOut(),
+                    },
+                  ]}
+                />
+              )}
             </div>
           </div>
         )}

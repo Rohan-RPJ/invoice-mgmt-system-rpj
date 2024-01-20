@@ -8,14 +8,15 @@ import CustomButtonWithIcon from "../common/CustomButtonWithIcon";
 const InvoiceFormFooterButtons = ({
   activeComponent,
   enableNextBtn,
+  enableSaveBtn,
   handleOnBackClick,
   handleOnNextClick,
   handleOnSaveClick,
   handleOnDownloadClick,
 }) => {
   return (
-    <div className="w-full h-full flex flex-row px-6 pt-4 pb-12 justify-end">
-      {activeComponent !== 0 && (
+    <div className="w-full h-full flex flex-row px-6 pt-4 pb-12 justify-between">
+      {activeComponent !== 0 ? (
         <CustomButtonWithIcon
           label="Back"
           btnType="button"
@@ -27,6 +28,8 @@ const InvoiceFormFooterButtons = ({
           textColor="text-white"
           disabled={activeComponent === 0 ? true : false}
         />
+      ) : (
+        <div />
       )}
 
       <div className="flex flex-row gap-8">
@@ -38,8 +41,9 @@ const InvoiceFormFooterButtons = ({
           hoverBgColor="hover:bg-green-700"
           textColor="text-white"
           showTextOnSmallScreens={true}
+          disabled={!enableSaveBtn}
         />
-        {activeComponent < 1 ? (
+        {activeComponent <= 5 ? (
           <CustomButtonWithIcon
             label="Next"
             btnType="button"

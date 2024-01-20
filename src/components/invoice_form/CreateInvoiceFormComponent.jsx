@@ -1,23 +1,27 @@
 import InvoiceJsonProcessor from "@/utilities/InvoiceJsonProcessor";
-import { isObjectEmpty } from "@/utilities/ObjectUtils";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import ViewPdf from "../ViewPdf";
-import CustomFormModal from "../common/CustomFormModal";
-import TableComponent from "../common/TableComponent";
 import Invoice from "../invoice/Invoice";
 import CustomerDetailsComponent from "./CustomerDetailsComponent";
-import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import ProductDetailsComponent from "./ProductDetailsComponent";
-import ESignComponent from "../common/ESignComponent";
-import CustomFormSectionTitleSubTitle from "../common/CustomFormSectionTitleSubTitle";
+import YourCompanyDetailsComponent from "./YourCompanyDetailsComponent";
+import { useForm } from "react-hook-form";
+import InvoiceDetailsComponent from "./InvoiceDetailsComponent";
+import ESignComponent from "./../common/ESignComponent";
+import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
+import MyCompanyBankDetailsInputComponent from "./MyCompanyBankDetailsInputComponent";
+import TnCComponent from "./TnCComponent";
+
 // import useSWR, { mutate } from "swr";
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
+const CreateInvoiceFormComponent = ({
+  invoiceNo: inputInvoiceNo,
+  isMobileNav,
+}) => {
   // ask for confirmation if user does refresh
   useEffect(() => {
     const unloadCallback = (event) => {
@@ -30,13 +34,18 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
     return () => window.removeEventListener("beforeunload", unloadCallback);
   }, []);
 
-  const invoiceJsonProcessor = new InvoiceJsonProcessor(invoiceNo);
+  const invoiceJsonProcessor = new InvoiceJsonProcessor(inputInvoiceNo);
   const [invoiceJsonData, setInvoiceJsonData] = useState(
     invoiceJsonProcessor.getEmptyInvoiceJson()
   );
 
-  let emptyProdDtls = invoiceJsonProcessor.getEmptyProductItems();
+  let emptyInvoiceNo = invoiceJsonProcessor.getEmptyInvoiceNo();
+  let emptyInvoiceDate = invoiceJsonProcessor.getEmptyInvoiceDate();
+  let emptyYourCmpnyDtls = invoiceJsonProcessor.getEmptyYourCompanyDetails();
   let emptyCustDtls = invoiceJsonProcessor.getEmptyCustomerDetails();
+  let emptyProdDtls = invoiceJsonProcessor.getEmptyProductItems();
+  let emptyMyCmpnyBankDtls = invoiceJsonProcessor.getEmptyMyCompanyBankDtls();
+  let emptyTnC = invoiceJsonProcessor.getEmptyTnC();
 
   // deep copy: emptyProdDtls.map((emptyProd) => {return {...emptyProd}})
   // const [products, setProducts] = useState(
@@ -44,66 +53,52 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
   //     return { ...emptyProd };
   //   })
   // );
-  const [products, setProducts] = useState([]);
+  const [invoiceNo, setInvoiceNo] = useState(emptyInvoiceNo);
+  const [invoiceDate, setInvoiceDate] = useState(emptyInvoiceDate);
+  const [myCmpnyBankDtls, setMyCmpnyBankDtls] = useState({
+    ...emptyMyCmpnyBankDtls,
+  });
   const [customerDtls, setCustomerDtls] = useState({ ...emptyCustDtls });
+  const [products, setProducts] = useState([]);
+  const [yourCompanyDtls, setYourCompanyDtls] = useState({
+    ...emptyYourCmpnyDtls,
+  });
+  const [tnC, setTnC] = useState(emptyTnC);
 
-  /*
-  prodData = {
-    0-desc: "dd",
-    0-gstPercent: "59",
-    0-qty: "59",
-    0-rate: "985",
-    1-desc: "dlp",
-    1-gstPercent: "",
-    1-qty: "",
-    1-rate: "",
-  }
-  */
-  const handleProdDetailChange = (prodId, prodData) => {
-    let isProductFound = products.length > 0 && products[prodId] ? true : false;
-    let tempProductObj = {};
+  const handleOnInvoiceNoChange = (data) => {
+    setInvoiceNo((prevDtls) => data);
+  };
+  const handleOnInvoiceDateChange = (data) => {
+    setInvoiceDate((prevDtls) => data);
+  };
+  const handleOnYourCmpnyDtlsChange = (data) => {
+    setYourCompanyDtls((prevDtls) => ({
+      ...data,
+    }));
+  };
+  const handleOnCustDtlsChange = (data) => {
+    setCustomerDtls((prevDtls) => ({
+      ...data,
+    }));
+  };
+  const handleOnTnCChange = (data) => {
+    setTnC((prevDtls) => data);
+  };
+  const handleOnProdDtlsChange = (isProductFound, prodId, tempProductObj) => {
     isProductFound
-      ? (tempProductObj = products[prodId])
-      : (tempProductObj = { ...emptyProdDtls[0] });
-    console.log("prodData", prodData);
-
-    for (const key in prodData) {
-      if (key.split("-")[0] == prodId && prodData.hasOwnProperty(key)) {
-        tempProductObj[key.split("-")[1]] = prodData[key];
-      }
-    }
-
-    console.log("isProdFound", isProductFound);
-    console.log("tempProd", tempProductObj);
-
-    const delayDebounceFn = setTimeout(() => {
-      isProductFound
-        ? setProducts((prevProducts) =>
-            prevProducts.map((prevProd, ind) => {
-              if (ind === prodId) return tempProductObj;
-              return prevProd;
-            })
-          )
-        : setProducts((prevProducts) =>
-            [...prevProducts, tempProductObj].map((newProd) => {
-              return newProd;
-            })
-          );
-    }, 0);
-
-    setEditProductDtlsId(null);
-
-    return () => clearTimeout(delayDebounceFn);
+      ? setProducts((prevProducts) =>
+          prevProducts.map((prevProd, ind) => {
+            if (ind === prodId) return tempProductObj;
+            return prevProd;
+          })
+        )
+      : setProducts((prevProducts) =>
+          [...prevProducts, tempProductObj].map((newProd) => {
+            return newProd;
+          })
+        );
   };
 
-  const [editProductDtlsId, setEditProductDtlsId] = useState(null);
-  const handleOnProdDtlsEditClicked = (id) => {
-    console.log("handleOnProdDtlsEditClicked", id);
-    setEditProductDtlsId(id);
-  };
-  const handleOnProdDtlsModalClose = (id) => {
-    setEditProductDtlsId(null);
-  };
   const handleOnProdDtlsDeleteClicked = (id) => {
     console.log("handleOnProdDtlsDeleteClicked", id);
     // Delete product with given id
@@ -125,35 +120,31 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
   useEffect(() => {
     console.log("useEffect::Products::", products);
     console.log("useEffect::eSignUrl::", eSignUrl);
+    invoiceNo && invoiceJsonProcessor.processInvoiceNo(invoiceNo);
+    invoiceDate && invoiceJsonProcessor.processInvoiceDate(invoiceDate);
+    yourCompanyDtls &&
+      invoiceJsonProcessor.processYourCompanyDtls(yourCompanyDtls);
     customerDtls && invoiceJsonProcessor.processCustomerDtls(customerDtls);
     products && invoiceJsonProcessor.processInvoiceBill(products);
     eSignUrl && invoiceJsonProcessor.processESignature(eSignUrl);
+    myCmpnyBankDtls &&
+      invoiceJsonProcessor.processMyCompanyBankDtls(myCmpnyBankDtls);
+    tnC && invoiceJsonProcessor.processTnC(tnC);
     setInvoiceJsonData({ ...invoiceJsonProcessor.getUpdatedInvoiceJson() });
 
     if (isMobileNav) window.scrollTo(0, 0); // scroll to top
-  }, [customerDtls, products, eSignUrl]);
+  }, [
+    invoiceNo,
+    invoiceDate,
+    yourCompanyDtls,
+    customerDtls,
+    products,
+    eSignUrl,
+    myCmpnyBankDtls,
+    tnC,
+  ]);
 
   /////////////////
-  const {
-    register: custDtlRegister,
-    handleSubmit: custDtlHandleSubmit,
-    formState: { errors: custDtlErrors },
-  } = useForm();
-
-  const onCustDtlSubmit = (data) => {
-    // it means customer details are entered by user and are also validated
-    console.log("onCustDtlSubmit", data);
-
-    if (data != null && !isObjectEmpty(data)) {
-      const delayDebounceFn = setTimeout(() => {
-        setCustomerDtls((prevDtls) => ({
-          ...data,
-        }));
-      }, 0);
-
-      return () => clearTimeout(delayDebounceFn);
-    }
-  };
 
   // const updateInvoiceSeqNo = async () => {
   //   const newName = user.name.toUpperCase();
@@ -181,10 +172,7 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
     });
   };
 
-  const [isCustDtlFormSubmittedOnce, setIsCustDtlFormSubmittedOnce] =
-    useState(false);
-
-  // 0 - CustomerDetails, 1 - ProductDetails
+  // 0 - YourCompanyDetails, 1 - CustomerDetails, 2 - ProductDetails
   const [activeComponent, setActiveComponent] = useState(0);
 
   const handleOnBackClick = () => {
@@ -197,124 +185,128 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
     window.scrollTo(0, 0); // scroll to top
   };
 
+  const invoiceDtlsForm = useForm();
+  const yourCmpnyDtlsForm = useForm({
+    defaultValues: async () => yourCompanyDtls,
+  });
+  const custDtlsForm = useForm();
+  const tnCForm = useForm();
+
+  const [isInvoiceDtlsFormSubmittedOnce, setIsInvoiceDtlsFormSubmittedOnce] =
+    useState(false);
+  const [isYourCmpnyDtlFormSubmittedOnce, setIsYourCmpnyDtlFormSubmittedOnce] =
+    useState(false);
+  const [isCustDtlFormSubmittedOnce, setIsCustDtlFormSubmittedOnce] =
+    useState(false);
+
+  const [defaultYourCmpnyEdited, setDefaultYourCmpnyEdited] = useState(false);
+
   return (
     <div className="w-full h-full invoice-form">
       <div className={`w-full h-full flex flex-col-reverse lg:flex-row`}>
         <div className={`w-full lg:w-[50%] lg:basis-1/2" h-full`}>
           {activeComponent === 0 && (
-            <form
-              onSubmit={custDtlHandleSubmit(onCustDtlSubmit)}
-              className={`w-full h-full`}
-            >
-              <div className="w-full h-full">
-                {/* Invoice Number auto-generated */}
-                {/* <InputDisabledFieldComponent
-                  labelName="Invoice Number"
-                  inputType="text"
-                  inputName="invoice_no"
-                  inputValue={invoiceJsonData.invoice_no}
-                /> */}
-                {/* Invoice Date auto-generated */}
-                {/* <InputDisabledFieldComponent
-                  labelName="Invoice Date"
-                  inputType="text"
-                  inputName="invoice_date"
-                  inputValue={new Date().toLocaleDateString()}
-                /> */}
-
-                {/* Customer Details will be entered by User : Name, Addr, Mob, Email etc. */}
-                <CustomerDetailsComponent
-                  register={custDtlRegister}
-                  formErrors={custDtlErrors}
-                  isFormSubmittedOnce={isCustDtlFormSubmittedOnce}
-                  isMobileNav={isMobileNav}
-                />
-                <InvoiceFormFooterButtons
-                  activeComponent={activeComponent}
-                  enableNextBtn={
-                    isCustDtlFormSubmittedOnce && isObjectEmpty(custDtlErrors)
-                  }
-                  handleOnBackClick={() => handleOnBackClick()}
-                  handleOnNextClick={() => handleOnNextClick()}
-                  handleOnSaveClick={() => setIsCustDtlFormSubmittedOnce(true)}
-                />
-              </div>
-            </form>
+            <InvoiceDetailsComponent
+              form={invoiceDtlsForm}
+              invoiceNo={invoiceNo}
+              invoiceDate={invoiceDate}
+              isFormSubmittedOnce={isInvoiceDtlsFormSubmittedOnce}
+              isMobileNav={isMobileNav}
+              handleOnInvoiceNoChange={handleOnInvoiceNoChange}
+              handleOnInvoiceDateChange={handleOnInvoiceDateChange}
+              activeComponent={activeComponent}
+              handleOnBackClick={handleOnBackClick}
+              handleOnNextClick={handleOnNextClick}
+              handleOnSaveClick={() => {
+                setIsInvoiceDtlsFormSubmittedOnce(true);
+              }}
+            />
           )}
 
           {activeComponent === 1 && (
-            <div
-              // onSubmit={handleAllProductsSubmit(onProdDtlSubmit)}
-              className={`w-full h-full`}
-            >
-              <CustomFormSectionTitleSubTitle
-                title={"Product Details"}
-                subtitle={
-                  "Add your Products by clicking on 'ADD NEW PRODUCT' below"
+            <YourCompanyDetailsComponent
+              form={yourCmpnyDtlsForm}
+              defaultYourCmpnyEdited={defaultYourCmpnyEdited}
+              handleOnDefaultValuesEdited={() =>
+                setDefaultYourCmpnyEdited(true)
+              }
+              currYourCmpnyDtls={yourCompanyDtls}
+              isFormSubmittedOnce={isYourCmpnyDtlFormSubmittedOnce}
+              isMobileNav={isMobileNav}
+              handleOnYourCmpnyDtlsChange={handleOnYourCmpnyDtlsChange}
+              activeComponent={activeComponent}
+              handleOnBackClick={handleOnBackClick}
+              handleOnNextClick={handleOnNextClick}
+              handleOnSaveClick={() => {
+                setIsYourCmpnyDtlFormSubmittedOnce(true);
+              }}
+            />
+          )}
+
+          {activeComponent === 2 && (
+            <CustomerDetailsComponent
+              form={custDtlsForm}
+              currCustomerDtls={customerDtls}
+              isFormSubmittedOnce={isCustDtlFormSubmittedOnce}
+              isMobileNav={isMobileNav}
+              handleOnCustDtlsChange={handleOnCustDtlsChange}
+              activeComponent={activeComponent}
+              handleOnBackClick={handleOnBackClick}
+              handleOnNextClick={handleOnNextClick}
+              handleOnSaveClick={() => setIsCustDtlFormSubmittedOnce(true)}
+            />
+          )}
+
+          {activeComponent === 3 && (
+            <ProductDetailsComponent
+              products={products}
+              emptyProdDtls={emptyProdDtls}
+              isMobileNav={isMobileNav}
+              handleOnProdDtlsChange={handleOnProdDtlsChange}
+              handleOnProdDtlsDeleteClicked={handleOnProdDtlsDeleteClicked}
+              activeComponent={activeComponent}
+              handleOnBackClick={handleOnBackClick}
+              handleOnNextClick={handleOnNextClick}
+              // handleOnDownloadClick={handleOnDownloadClick}
+            />
+          )}
+
+          {activeComponent === 4 && (
+            <div>
+              <MyCompanyBankDetailsInputComponent
+                bankDetails={myCmpnyBankDtls}
+                handleOnMyCmpnyBankDtlsChange={(myCmpnyBankDtls) =>
+                  setMyCmpnyBankDtls(myCmpnyBankDtls)
                 }
+                isMobileNav={isMobileNav}
               />
-
-              <div className="p-2" />
-
-              {editProductDtlsId != null && (
-                <CustomFormModal
-                  id={editProductDtlsId}
-                  modalTitle="Update Product/Item Details Below"
-                  modalSubmitBtnName="Update Product"
-                  modalCancelBtnName="Cancel"
-                  modalBody={ProductDetailsComponent}
-                  modalBodyAttr={{
-                    id: editProductDtlsId,
-                    handleProdDetailChange: handleProdDetailChange,
-                    prodDtls: products[editProductDtlsId],
-                  }}
-                  handleOnModalFormSubmit={handleProdDetailChange}
-                  handleOnModalClose={handleOnProdDtlsModalClose}
-                  showModalOpenerBtn={false}
-                />
-              )}
-
-              <CustomFormModal
-                id={products ? products.length : 0}
-                modalBtnName="Add New Product"
-                modalTitle="Enter Product/Item Details Below"
-                modalSubmitBtnName="Save Product"
-                modalCancelBtnName="Cancel"
-                modalBody={ProductDetailsComponent}
-                modalBodyAttr={{
-                  id: products ? products.length : 0,
-                  handleProdDetailChange: handleProdDetailChange,
-                  isMobileNav: isMobileNav,
-                }}
-                handleOnModalFormSubmit={handleProdDetailChange}
-                handleOnModalClose={handleOnProdDtlsModalClose}
-                showModalOpenerBtn={true}
-              />
-
-              <TableComponent
-                headDataObj={[
-                  { name: "desc" },
-                  { name: "rate" },
-                  { name: "qty" },
-                  { name: "gstPercent" },
-                ]}
-                bodyDataObj={products}
-                handleOnEditClicked={handleOnProdDtlsEditClicked}
-                handleOnDeleteClicked={handleOnProdDtlsDeleteClicked}
-              />
-
               <InvoiceFormFooterButtons
                 activeComponent={activeComponent}
-                enableNextBtn={products.length > 0}
+                enableSaveBtn={true}
+                enableNextBtn={true}
                 handleOnBackClick={() => handleOnBackClick()}
-                handleOnNextClick={() => handleOnNextClick()}
-                // handleOnSaveClick={() => setIsProdDtlFormSubmittedOnce(true)}
-                handleOnDownloadClick={() => handleOnDownloadClick()}
+                handleOnNextClick={handleOnNextClick}
+                // handleOnSaveClick={() => handleOnESignSaveClicked()}
               />
             </div>
           )}
 
-          {/* {activeComponent === 2 && (
+          {activeComponent === 5 && (
+            <div>
+              <TnCComponent
+                form={tnCForm}
+                tnC={tnC}
+                // isFormSubmittedOnce={isFormSubmittedOnce}
+                isMobileNav={isMobileNav}
+                handleOnTnCChange={handleOnTnCChange}
+                activeComponent={activeComponent}
+                handleOnBackClick={handleOnBackClick}
+                handleOnNextClick={handleOnNextClick}
+              />
+            </div>
+          )}
+
+          {activeComponent === 6 && (
             <div>
               <ESignComponent
                 handleGetESignatureUrl={(eSignUrl) => setESignUrl(eSignUrl)}
@@ -327,7 +319,7 @@ const CreateInvoiceFormComponent = ({ invoiceNo, isMobileNav }) => {
                 handleOnDownloadClick={() => handleOnDownloadClick()}
               />
             </div>
-          )} */}
+          )}
         </div>
         <div
           className={`w-full lg:w-[50%] lg:basis-1/2 justify-center items-center my-auto h-full`}

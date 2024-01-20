@@ -1,183 +1,106 @@
-import {
-  CreditCardIcon,
-  CurrencyRupeeIcon,
-  EnvelopeIcon,
-  IdentificationIcon,
-  PhoneIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
-import InputEnabledFieldComponent from "./InputEnabledFieldComponent";
+import { useState } from "react";
 import CustomFormSectionTitleSubTitle from "../common/CustomFormSectionTitleSubTitle";
+import CompanyDetails from "./CompanyDetailsInputComponent";
+import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
+import { isObjectEmpty } from "@/utilities/ObjectUtils";
+import CompanyDetailsInstance from "./CompanyDetailsInstance";
 
 const CustomerDetailsComponent = ({
-  register,
-  formErrors,
+  form,
+  currCustomerDtls,
   isFormSubmittedOnce,
   isMobileNav,
+  handleOnCustDtlsChange,
+  activeComponent,
+  handleOnBackClick,
+  handleOnNextClick,
+  handleOnSaveClick,
 }) => {
-  const handleOnChange = (inputName, inputValue) => {
-    // setCustName(inputValue);
-    console.log("In handleCustNameChng", inputName, inputValue);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: formErrors },
+  } = form;
+
+  /*
+  {
+        company: "",
+        email: "",
+        mobileNo: "",
+        address: "",
+        panNo: "",
+        gstRegstrtnNo: "",
+      }
+  */
+  const cmpnyDtlsInstance = new CompanyDetailsInstance(
+    currCustomerDtls.company,
+    currCustomerDtls.address,
+    currCustomerDtls.mobileNo,
+    currCustomerDtls.email,
+    currCustomerDtls.panNo,
+    currCustomerDtls.gstRegstrtnNo
+  );
+
+  const onCustDtlSubmit = (data) => {
+    // it means customer details are entered by user and are also validated
+    console.log("onCustDtlSubmit", data);
+
+    if (data != null && !isObjectEmpty(data)) {
+      const delayDebounceFn = setTimeout(() => {
+        handleOnCustDtlsChange(data);
+      }, 0);
+
+      return () => clearTimeout(delayDebounceFn);
+    }
   };
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <CustomFormSectionTitleSubTitle
-        title={"Customer Details"}
-        subtitle={
-          "Enter Customer Details below to whom you want to sell the Items."
-        }
-      />
+    <form onSubmit={handleSubmit(onCustDtlSubmit)} className={`w-full h-full`}>
+      <div className="w-full h-full">
+        {/* Invoice Number auto-generated */}
+        {/* <InputDisabledFieldComponent
+                  labelName="Invoice Number"
+                  inputType="text"
+                  inputName="invoice_no"
+                  inputValue={invoiceJsonData.invoice_no}
+                /> */}
+        {/* Invoice Date auto-generated */}
+        {/* <InputDisabledFieldComponent
+                  labelName="Invoice Date"
+                  inputType="text"
+                  inputName="invoice_date"
+                  inputValue={new Date().toLocaleDateString()}
+                /> */}
 
-      <InputEnabledFieldComponent
-        labelName="Name"
-        inputType="text"
-        inputName="company"
-        otherAttr={{
-          placeholder: "Customer/Company Name",
-        }}
-        register={register}
-        inputValidations={{
-          required: "Customer/Company Name required!",
-          minLength: {
-            value: 2,
-            message: "Name too Short!",
-          },
-          maxLength: {
-            value: 50,
-            message: "Name too Long!",
-          },
-        }}
-        formErrors={formErrors}
-        handleOnChange={handleOnChange}
-        isFormSubmittedOnce={isFormSubmittedOnce}
-        inputIcon={UserIcon}
-        doFocus={true}
-      />
-      <InputEnabledFieldComponent
-        labelName="Address"
-        inputType="text"
-        inputName="address"
-        otherAttr={{
-          placeholder: "Customer Address",
-        }}
-        register={register}
-        inputValidations={{
-          maxLength: {
-            value: 150,
-            message: "Address too Long!",
-          },
-        }}
-        formErrors={formErrors}
-        handleOnChange={handleOnChange}
-        isFormSubmittedOnce={isFormSubmittedOnce}
-        inputIcon={IdentificationIcon}
-      />
-      <InputEnabledFieldComponent
-        labelName="Mobile No|Mobile"
-        inputType="number"
-        inputName="mobileNo"
-        otherAttr={{
-          placeholder: "Customer Mobile Number",
-        }}
-        inputValidations={{
-          required: "Customer Mobile Number required!",
-          minLength: {
-            value: 10,
-            message: "Invalid Mobile Number!",
-          },
-          maxLength: {
-            value: 10,
-            message: "Invalid Mobile Number!",
-          },
-        }}
-        register={register}
-        formErrors={formErrors}
-        handleOnChange={handleOnChange}
-        isFormSubmittedOnce={isFormSubmittedOnce}
-        inputIcon={PhoneIcon}
-        isMobileNav={isMobileNav}
-      />
-      <InputEnabledFieldComponent
-        labelName="Email Id|Email"
-        inputType="text"
-        inputName="email"
-        otherAttr={{
-          placeholder: "Customer Email Id",
-        }}
-        register={register}
-        inputValidations={{
-          pattern: {
-            value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-            message: "Invalid Email Id!",
-          },
-          maxLength: {
-            value: 100,
-            message: "Email Id too Long!",
-          },
-        }}
-        formErrors={formErrors}
-        handleOnChange={handleOnChange}
-        isFormSubmittedOnce={isFormSubmittedOnce}
-        inputIcon={EnvelopeIcon}
-        isMobileNav={isMobileNav}
-      />
-      <InputEnabledFieldComponent
-        labelName="Pan No"
-        inputType="text"
-        inputName="panNo"
-        otherAttr={{
-          placeholder: "Customer Pan Number",
-        }}
-        register={register}
-        inputValidations={{
-          minLength: {
-            value: 10,
-            message: "Invalid Pan Number!",
-          },
-          maxLength: {
-            value: 10,
-            message: "Invalid Pan Number!",
-          },
-          pattern: {
-            value: /^[A-Za-z0-9]+$/,
-            message: "Invalid Pan Number!",
-          },
-        }}
-        formErrors={formErrors}
-        handleOnChange={handleOnChange}
-        isFormSubmittedOnce={isFormSubmittedOnce}
-        inputIcon={CreditCardIcon}
-        inputStyleClass={`uppercase`}
-      />
-      <InputEnabledFieldComponent
-        labelName="GSTIN No"
-        inputType="text"
-        inputName="gstRegstrtnNo"
-        otherAttr={{
-          placeholder: "Customer Gst Registration Number",
-        }}
-        register={register}
-        inputValidations={{
-          minLength: {
-            value: 15,
-            message: "Invalid GST Number!",
-          },
-          maxLength: {
-            value: 15,
-            message: "Invalid GST Number!",
-          },
-          pattern: {
-            value: /^[A-Za-z0-9]+$/,
-            message: "Invalid GST Number!",
-          },
-        }}
-        formErrors={formErrors}
-        handleOnChange={handleOnChange}
-        isFormSubmittedOnce={isFormSubmittedOnce}
-        inputIcon={CurrencyRupeeIcon}
-      />
-    </div>
+        {/* Customer Details will be entered by User : Name, Addr, Mob, Email etc. */}
+        <div className="w-full h-full flex flex-col">
+          <CustomFormSectionTitleSubTitle
+            title={"Customer Details"}
+            subtitle={
+              "Enter Customer Details below to whom you want to sell the Items."
+            }
+            showBottomLine={true}
+          />
+          <CompanyDetails
+            cmpnyDtlsInstance={cmpnyDtlsInstance}
+            register={register}
+            formErrors={formErrors}
+            isFormSubmittedOnce={isFormSubmittedOnce}
+            isMobileNav={isMobileNav}
+            sellerCustomerText={"Customer"}
+            disableInputs={false}
+          />
+        </div>
+        <InvoiceFormFooterButtons
+          activeComponent={activeComponent}
+          enableNextBtn={isFormSubmittedOnce && isObjectEmpty(formErrors)}
+          enableSaveBtn={true}
+          handleOnBackClick={() => handleOnBackClick()}
+          handleOnNextClick={() => handleOnNextClick()}
+          handleOnSaveClick={() => handleOnSaveClick()}
+        />
+      </div>
+    </form>
   );
 };
 

@@ -4,12 +4,15 @@ import { Menu, Transition } from "@headlessui/react";
 import LinkWithImage from "./LinkWithImage";
 import LinkWithIcon from "./LinkWithIcon";
 import CustomImage from "./CustomImage";
+import Link from "next/link";
 
 const DropdownWithImage = ({
   isActiveDropdown,
   ddItems,
   ddImage,
   ddText,
+  truncateDDText,
+  showDDIcon,
 }) => {
   const [showDropdown, setShowDropdown] = useState(
     isActiveDropdown ? isActiveDropdown : false
@@ -26,8 +29,16 @@ const DropdownWithImage = ({
   }, []);
 
   return (
-    <div className="relative flex gap-2 items-center">
-    <p className={`w-[120px] text-right truncate`}>{ddText}</p>
+    <div className="relative flex gap-2">
+      <p
+        className={`text-right ${
+          truncateDDText && "truncate"
+        } hover:cursor-pointer`}
+        onClick={() => onHoverHandler()}
+        name="dropdown"
+      >
+        {ddText}
+      </p>
       {ddImage ? (
         <div className="w-[35px] h-[35px] rounded-full relative cursor-pointer">
           <CustomImage
@@ -35,22 +46,23 @@ const DropdownWithImage = ({
             className="rounded-full hover:ring-4 ring-gray-400/30 duration-200"
             alt={ddText}
             onClick={() => {
-            onHoverHandler();
-          }}
-          name="dropdown"
+              onHoverHandler();
+            }}
+            name="dropdown"
           />
         </div>
       ) : (
-        <ChevronDownIcon
-          width={32}
-          height={32}
-          className="bg-gray-200 rounded-full p-1.5 text-gray-600 cursor-pointer hover:bg-gray-300"
-          onClick={() => {
-            onHoverHandler();
-          }}
-          name="dropdown"
-        />
-        
+        showDDIcon && (
+          <ChevronDownIcon
+            width={32}
+            height={32}
+            className="bg-gradient-to-b from-gray-200 to-white rounded-full p-1.5 text-gray-600 cursor-pointer hover:from-gray-300"
+            onClick={() => {
+              onHoverHandler();
+            }}
+            name="dropdown"
+          />
+        )
       )}
 
       <Transition
@@ -83,19 +95,21 @@ const DropdownWithImage = ({
                 key={index}
                 className={`flex flex-col justify-center space-x-1 px-2 cursor-pointer hover:bg-gray-200 ${
                   index !== arr.length - 1
-                    ? `${
-                        index === 0
-                          ? "rounded-tl-md rounded-tr-md"
-                          : ""
-                      }`
+                    ? `${index === 0 ? "rounded-tl-md rounded-tr-md" : ""}`
                     : "rounded-bl-md rounded-br-md"
                 }`}
                 onClick={onClickHandler ? () => onClickHandler() : () => {}}
               >
-                <div className={`pr-20 pl-4 py-6`}>
-                  <LinkWithIcon text={text} link={link} icon={Icon} />
-                </div>
-                <hr className={`w-full ${index === arr.length - 1 && "hidden"}`} />
+                <Link
+                  href={link ? link : "#"}
+                  className={`pr-20 pl-4 py-6 flex items-center space-x-4 font-sans font-normal whitespace-nowrap text-black text-base cursor-pointer hover:text-gigas`}
+                >
+                  <Icon width={25} height={22} className={"text-gray-600"} />
+                  <p className="text-gray-900">{text}</p>
+                </Link>
+                <hr
+                  className={`w-full ${index === arr.length - 1 && "hidden"}`}
+                />
               </li>
             ))
           }

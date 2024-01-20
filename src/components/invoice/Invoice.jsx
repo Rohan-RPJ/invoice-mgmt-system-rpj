@@ -55,7 +55,12 @@ const Invoice = ({ data: invoice }) => {
             <Image style={styles.logo} src={invoice.logoUrl} />
           ) : (
             <Text
-              style={{ fontSize: "20", fontFamily: "Times-Bold", width: "40%" }}
+              style={{
+                fontSize: "20",
+                fontFamily: "Times-Bold",
+                width: "40%",
+                textTransform: "uppercase",
+              }}
             >
               {invoice.billFrom.company}
             </Text>
@@ -74,7 +79,7 @@ const Invoice = ({ data: invoice }) => {
           <BillTo invoice={invoice} />
         </View>
         <InvoiceItemsTable invoice={invoice} />
-        <TermsAndConditions />
+        <TermsAndConditions tnc={invoice.tnc} />
         <AuthorizedSignatureComponent
           company={invoice.billFrom.company}
           eSignUrl={invoice.eSignUrl}

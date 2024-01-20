@@ -1,20 +1,23 @@
+import { bankDetails, billFrom } from "@/models/SellerDetailsJson";
+
 class InvoiceJsonProcessor {
   #emptyInvoiceJson;
 
   constructor(invoiceNo) {
     this.#emptyInvoiceJson = {
       id: "5df3180a09ea16dc4b95f910",
-      invoice_no: invoiceNo,
+      // invoice_no: true ? "111123-VSS-85" : invoiceNo,
+      invoice_no: invoiceNo ? invoiceNo : "1",
       balance: "$2,283.74",
-      billFrom: {
-        company: "VAISHALI SALES & SERVICES",
-        email: "prakash4p654@gmail.com",
-        mobileNo: "9834203564",
-        address:
-          "Shop no. 10, Shivgiri Apartment, Viva Girivihar Complex, Manvel Pada Road, Virar(E), Palghar-401305",
-        panNo: "ACLPJ2806J",
-        gstRegstrtnNo: "27ACLPJ2806J2ZH",
-      },
+      billFrom: billFrom,
+      // billFrom: {
+      //   company: "",
+      //   email: "",
+      //   mobileNo: "",
+      //   address: "",
+      //   panNo: "",
+      //   gstRegstrtnNo: "",
+      // },
       billTo: {
         company: "",
         email: "",
@@ -23,8 +26,8 @@ class InvoiceJsonProcessor {
         panNo: "",
         gstRegstrtnNo: "",
       },
-      trans_date: new Date().toLocaleDateString(),
-      due_date: "2019-10-12",
+      trans_date: "",
+      due_date: new Date().toLocaleDateString(),
       items: [
         {
           desc: "",
@@ -33,10 +36,12 @@ class InvoiceJsonProcessor {
           gstPercent: 0,
         },
       ],
-      bankDetails: {
-        upiQrImg: process.env.IMAGE_BASE_URL + "vss-upiQr.jpeg",
-      },
-      eSignUrl: process.env.IMAGE_BASE_URL + "eSignUrl.jpeg",
+      bankDetails: bankDetails,
+      // eSignUrl: process.env.IMAGE_BASE_URL + "eSignUrl.jpeg",
+      eSignUrl: "",
+      tnc: `SUBJECT TO PALGHAR JURISDICTION ONLY.
+      GOODS ONCE SOLD WILL NOT BE TAKEN BACK OR ENHANCED
+      RECEIVED GOODS IN GOOD ORDER AND CONDITION.`,
     };
     this.invoiceJson = { ...this.#emptyInvoiceJson };
   }
@@ -64,12 +69,32 @@ class InvoiceJsonProcessor {
     this.invoiceJson.totalAmt = totalInvoiceAmt;
   }
 
+  processInvoiceNo(invoiceNo) {
+    this.invoiceJson.invoice_no = invoiceNo;
+  }
+
+  processInvoiceDate(invoiceDate) {
+    this.invoiceJson.trans_date = invoiceDate;
+  }
+
+  processYourCompanyDtls(yourCompanyDtls) {
+    this.invoiceJson.billFrom = { ...yourCompanyDtls };
+  }
+
   processCustomerDtls(customerDtls) {
     this.invoiceJson.billTo = { ...customerDtls };
   }
 
   processESignature(eSignUrl) {
     this.invoiceJson.eSignUrl = eSignUrl;
+  }
+
+  processMyCompanyBankDtls(myCompanyBankDtls) {
+    this.invoiceJson.bankDetails = { ...myCompanyBankDtls };
+  }
+
+  processTnC(tnc) {
+    this.invoiceJson.tnc = tnc;
   }
 
   getUpdatedItems() {
@@ -92,12 +117,32 @@ class InvoiceJsonProcessor {
     return this.#emptyInvoiceJson;
   }
 
-  getEmptyProductItems() {
-    return this.#emptyInvoiceJson.items;
+  getEmptyYourCompanyDetails() {
+    return this.#emptyInvoiceJson.billFrom;
   }
 
   getEmptyCustomerDetails() {
     return this.#emptyInvoiceJson.billTo;
+  }
+
+  getEmptyProductItems() {
+    return this.#emptyInvoiceJson.items;
+  }
+
+  getEmptyInvoiceNo() {
+    return this.#emptyInvoiceJson.invoice_no;
+  }
+
+  getEmptyInvoiceDate() {
+    return this.#emptyInvoiceJson.trans_date;
+  }
+
+  getEmptyMyCompanyBankDtls() {
+    return this.#emptyInvoiceJson.bankDetails;
+  }
+
+  getEmptyTnC() {
+    return this.#emptyInvoiceJson.tnc;
   }
 }
 

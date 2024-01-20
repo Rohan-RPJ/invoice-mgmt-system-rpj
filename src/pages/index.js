@@ -1,9 +1,9 @@
 import BasePageComponent from "@/components/base/BasePageComponent";
-import CreateInvoiceMainComponent from "@/components/CreateInvoiceMainComponent";
+import CreateInvoiceMainComponent from "@/components/pagecomponents/CreateInvoiceMainComponent";
 import getInvoiceNo from "@/utilities/GetInvoiceNo";
 import { gql, useQuery } from "@apollo/client";
 import Temp from "./Temp";
-import HomeMainComponent from "@/components/HomeMainComponent";
+import HomeMainComponent from "@/components/pagecomponents/HomeMainComponent";
 
 const allCountriesQuery = gql`
   query {

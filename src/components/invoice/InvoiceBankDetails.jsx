@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     width: "65%",
   },
   bankDetailsLabel: {
-    fontFamily: "Helvetica-Bold", 
+    fontFamily: "Helvetica-Bold",
     fontSize: "11",
     borderRightColor: borderColor,
     borderRightWidth: 1,
@@ -69,22 +69,26 @@ const InvoiceBankDetails = ({ bankDetails }) => {
         <Text style={styles.bankDetailsLabel}>Bank Details</Text>
         <View style={styles.bankDetailsDataView}>
           <Text style={styles.bankDetailsLabels}>Bank Name</Text>
-          <Text style={styles.bankDetailsDataText}>Union Bank of India</Text>
+          <Text style={styles.bankDetailsDataText}>{bankDetails.bankName}</Text>
         </View>
         <View style={styles.bankDetailsDataView}>
           <Text style={styles.bankDetailsLabels}>IFSC No</Text>
-          <Text style={styles.bankDetailsDataText}>UBIN0568228</Text>
+          <Text style={styles.bankDetailsDataText}>{bankDetails.ifscNo}</Text>
         </View>
         <View style={{ ...styles.bankDetailsDataView, borderBottomWidth: 0 }}>
           <Text style={styles.bankDetailsLabels}>Bank A/C No</Text>
-          <Text style={styles.bankDetailsDataText}>682201010050017</Text>
+          <Text style={styles.bankDetailsDataText}>
+            {bankDetails.accountNo}
+          </Text>
         </View>
       </View>
       <View style={styles.upiDetailsContainer}>
         <Text style={{ ...styles.bankDetailsLabel, borderRightWidth: 0 }}>
           Pay Using UPI
         </Text>
-        {bankDetails.upiQrImg && <Image style={styles.upiQrImg} src={bankDetails.upiQrImg} /> }
+        {bankDetails.upiQrImg && (
+          <Image style={styles.upiQrImg} src={bankDetails.upiQrImg} />
+        )}
       </View>
     </View>
   );

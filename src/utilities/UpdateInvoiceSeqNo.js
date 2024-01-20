@@ -1,6 +1,6 @@
 var PropertiesReader = require("properties-reader");
 
-var filePath = process.env.PROPS_BASE_PATH;
+// var filePath = process.env.PROPS_BASE_PATH;
 var properties = PropertiesReader(filePath, { writer: { saveSections: true } });
 
 class UpdateInvoiceSeqNo {

@@ -29,17 +29,18 @@ const CustomButtonWithIcon = ({
   keepLabelIconGap,
   borderColor,
   showTextOnSmallScreens,
+  otherStyles
 }) => {
   return (
-    <div className={`w-full h-full`}>
+    <div className={``}>
       <button
         type={`${btnType ? btnType : "button"}`}
         onClick={handleOnClick}
-        className={`${btnWidth == null ? `${!Icon && "w-28"} sm:w-40` : btnWidth} p-2 ${
+        className={`${btnWidth == null ? `${Icon ? "w-32" : "w-28"} sm:w-40` : btnWidth} p-2 ${
           disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`
         } ${showTextOnSmallScreens ? "rounded-md" : "rounded-full"} md:rounded-md ${textColor} ${hoverTextColor!=null && hoverTextColor} ${
           borderColor != null && `border-2 ${borderColor}`
-        } group transition duration-150`}
+        } group transition duration-150 ${otherStyles && `${otherStyles}`}`}
         disabled={disabled ? disabled : false}
       >
         <div
@@ -53,8 +54,7 @@ const CustomButtonWithIcon = ({
         >
           {Icon && (
             <Icon
-              width="20"
-              className={`transition-all duration-150 ${
+              className={`w-4 sm:w-5 transition-all duration-150 ${
                 !disabled &&
                 doIconTransition &&
                 `${

@@ -1,8 +1,7 @@
 var PropertiesReader = require("properties-reader");
-// import {PropertiesReader} from "properties-reader";
 
-var filePath = process.env.PROPS_BASE_PATH;
-var properties = PropertiesReader(filePath);
+// var filePath = process.env.PROPS_BASE_PATH;
+// var properties = PropertiesReader(filePath);
 class GetInvoiceNo {
   constructor() {}
 
@@ -33,7 +32,8 @@ class GetInvoiceNo {
   }
 
   getInvoiceSeqNo() {
-    let invoiceSeqNo = properties.get("vss") + 1;
+    // let invoiceSeqNo = properties.get("vss") + 1;
+    let invoiceSeqNo = "1";
     return invoiceSeqNo;
   }
 }

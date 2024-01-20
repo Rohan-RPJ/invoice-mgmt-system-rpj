@@ -25,15 +25,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const TermsAndConditions = () => {
+const TermsAndConditions = ({ tnc }) => {
   return (
     <View style={styles.container}>
       <Text style={{ fontFamily: "Helvetica-Bold", fontSize: "11" }}>
         Terms & Conditions : E & O.E.
       </Text>
-      <Text>SUBJECT TO PALGHAR JURISDICTION ONLY.</Text>
+      <Text>{tnc}</Text>
+      {/* <Text>SUBJECT TO PALGHAR JURISDICTION ONLY.</Text>
       <Text>GOODS ONCE SOLD WILL NOT BE TAKEN BACK OR ENHANCED</Text>
-      <Text>RECEIVED GOODS IN GOOD ORDER AND CONDITION.</Text>
+      <Text>RECEIVED GOODS IN GOOD ORDER AND CONDITION.</Text> */}
     </View>
   );
 };

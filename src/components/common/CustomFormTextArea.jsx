@@ -4,7 +4,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
-const CustomFormInput = ({
+const CustomFormTextArea = ({
   inputType,
   inputName,
   inputValue,
@@ -40,7 +40,7 @@ const CustomFormInput = ({
             className={`w-[28px] sm:w-[34px] pl-2 absolute m-auto top-1/2 bottom-1/2 text-gray-600`}
           />
         )}
-        <input
+        <textarea
           autoFocus={doFocus == null ? false : doFocus}
           autoComplete="off"
           type={inputType}
@@ -87,4 +87,4 @@ const CustomFormInput = ({
   );
 };
 
-export default CustomFormInput;
+export default CustomFormTextArea;

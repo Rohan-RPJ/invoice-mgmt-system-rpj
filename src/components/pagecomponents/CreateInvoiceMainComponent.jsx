@@ -1,4 +1,4 @@
-import CreateInvoiceFormComponent from "./invoice_form/CreateInvoiceFormComponent";
+import CreateInvoiceFormComponent from "../invoice_form/CreateInvoiceFormComponent";
 
 const CreateInvoiceMainComponent = ({ invoiceNo, isMobileNav }) => {
   return (
