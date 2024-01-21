@@ -89,11 +89,17 @@ const BasePageComponent = ({ pageContent: PageContent, pageProps }) => {
         <div className={`w-full h-full py-4 overflow-scroll scrollbar-hide`}>
           {/* Main Content */}
           <main className={`w-full h-full`}>
-            <PageContent isMobileNav={isMobileNav} {...pageProps} />
+            <PageContent
+              isMobileNav={isMobileNav}
+              {...pageProps}
+              isLoggedInUser={user ? true : false}
+            />
           </main>
 
           {/* Footer */}
-          <footer className={`w-full h-full`}>{/* <Footer /> */}</footer>
+          <footer className={`w-full h-full`}>
+            <Footer />
+          </footer>
         </div>
       </div>
     </div>
