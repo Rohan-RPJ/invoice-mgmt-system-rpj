@@ -4,13 +4,28 @@ import InvoiceTotal from "./InvoiceTotal";
 import { numToWord } from "./../../utilities/NumToWord";
 
 const InvoiceTableFooter = ({ invoice }) => {
+  // console.log(
+  //   "InvoiceTableFooter",
+  //   invoice.autoGenFinalPrices,
+  //   invoice.manualTotalAmt,
+  //   invoice
+  // );
   return (
     <Fragment>
-      <InvoiceTotal
-        totalTaxAmt={invoice.totalGstAmt}
-        totalAmtInNum={invoice.totalAmt}
-        totalAmtInWords={numToWord(Math.ceil(invoice.totalAmt))}
-      />
+      {invoice.autoGenFinalPrices ? (
+        <InvoiceTotal
+          totalTaxAmt={invoice.totalGstAmt}
+          totalAmtInNum={invoice.totalAmt}
+          totalAmtInWords={numToWord(Math.ceil(invoice.totalAmt))}
+        />
+      ) : (
+        <InvoiceTotal
+          totalTaxAmt={invoice.manualTotalGstAmt}
+          totalAmtInNum={invoice.manualTotalAmt}
+          totalAmtInWords={numToWord(Math.ceil(invoice.manualTotalAmt))}
+        />
+      )}
+
       <InvoiceBankDetails bankDetails={invoice.bankDetails} />
     </Fragment>
   );

@@ -13,11 +13,11 @@ const HomeMainComponent = ({ isMobileNav, isLoggedInUser }) => {
           : "link to get started!"}
       </h1>
       <div className="w-full h-full bg-blue-300 underline p-2">
-      {isLoggedInUser ? (
-        <LinkWithImage label={"Create Invoice"} link={"/invoice/create"} />
-      ) : (
-        <LinkWithImage label={"SignUp/SignIn"} link={"/api/auth/login"} />
-      )}
+        {isLoggedInUser ? (
+          <LinkWithImage label={"Create Invoice"} link={"/invoice/create"} />
+        ) : (
+          <LinkWithImage label={"SignUp/SignIn"} link={"/api/auth/login"} />
+        )}
       </div>
       <h2 className={`text-lg font-semibold italic py-6`}>
         Your feedback really matters{" "}

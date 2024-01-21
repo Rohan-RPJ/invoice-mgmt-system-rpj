@@ -90,16 +90,34 @@ const InvoiceTableRow = ({ items }) => {
       <View style={styles.row} key={index}>
         <Text style={styles.srno}>{index + 1}</Text>
         <Text style={styles.description}>{item.desc}</Text>
-        <AmountComponent amount={item.rate} style={styles.rate} />
-        <Text style={styles.qty}>{item.qty}</Text>
-        <AmountComponent amount={item.prodNetAmt} style={styles.netAmt} />
+        <AmountComponent
+          amount={item.rate}
+          showAmount={item.show_rate}
+          style={styles.rate}
+        />
+        <Text style={styles.qty}>
+          {(item.show_qty == null || item.show_qty == true) && item.qty}
+        </Text>
+        <AmountComponent
+          amount={item.prodNetAmt}
+          showAmount={item.show_netAmount}
+          style={styles.netAmt}
+        />
         <View style={styles.gst}>
-          <AmountComponent amount={item.prodGstAmt} />
+          <AmountComponent
+            amount={item.prodGstAmt}
+            showAmount={item.show_gstAmount}
+          />
           <Text style={{ fontSize: "8" }}>
-            {parseFloat(item.gstPercent).toFixed(2)}%
+            {(item.show_gstPercent == null || item.show_gstPercent == true) &&
+              parseFloat(item.gstPercent).toFixed(2) + "%"}
           </Text>
         </View>
-        <AmountComponent amount={item.prodTotAmt} style={styles.totAmt} />
+        <AmountComponent
+          amount={item.prodTotAmt}
+          showAmount={item.show_totalAmount}
+          style={styles.totAmt}
+        />
       </View>
     );
   });

@@ -32,8 +32,14 @@ class InvoiceJsonProcessor {
         {
           desc: "",
           qty: 0,
+          show_qty: true,
           rate: 0,
+          show_rate: true,
           gstPercent: 0,
+          show_gstPercent: true,
+          show_netAmount: true,
+          show_gstAmount: true,
+          show_totalAmount: true,
         },
       ],
       bankDetails: bankDetails,
@@ -42,6 +48,9 @@ class InvoiceJsonProcessor {
       tnc: `SUBJECT TO PALGHAR JURISDICTION ONLY.
       GOODS ONCE SOLD WILL NOT BE TAKEN BACK OR ENHANCED
       RECEIVED GOODS IN GOOD ORDER AND CONDITION.`,
+      autoGenFinalPrices: true, // false then set below manual edit prices set by user manually
+      manualTotalAmt: 0,
+      manualTotalGstAmt: 0,
     };
     this.invoiceJson = { ...this.#emptyInvoiceJson };
   }
@@ -97,6 +106,14 @@ class InvoiceJsonProcessor {
     this.invoiceJson.tnc = tnc;
   }
 
+  processAutoGenFinalPrices(autoGenFinalPrices) {
+    this.invoiceJson.autoGenFinalPrices = autoGenFinalPrices;
+  }
+
+  processManualTotalAmt(manualTotalAmount) {
+    this.invoiceJson.manualTotalAmt = manualTotalAmount;
+  }
+
   getUpdatedItems() {
     return this.invoiceJson.items;
   }
@@ -143,6 +160,14 @@ class InvoiceJsonProcessor {
 
   getEmptyTnC() {
     return this.#emptyInvoiceJson.tnc;
+  }
+
+  getEmptyAutoGenFinalPrices() {
+    return this.#emptyInvoiceJson.autoGenFinalPrices;
+  }
+
+  getEmptyManualTotalAmt() {
+    return this.#emptyInvoiceJson.manualTotalAmt;
   }
 }
 

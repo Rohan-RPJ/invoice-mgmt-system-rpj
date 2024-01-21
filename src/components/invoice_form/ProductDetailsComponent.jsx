@@ -6,18 +6,31 @@ import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import ProductDetailsInputComponent from "./ProductDetailsInputComponent";
 import CustomFormModal from "../common/CustomFormModal";
 import TableComponent from "../common/TableComponent";
+import CheckboxList from "../common/CheckboxList";
+import RadioButtonList from "../common/RadioButtonList";
 
 const ProductDetailsComponent = ({
   products,
   emptyProdDtls,
+  autoGenFinalPrices: inputAutoGenFinalPrices,
+  manualTotalAmount: inputManualTotalAmount,
   isMobileNav,
   handleOnProdDtlsChange,
   handleOnProdDtlsDeleteClicked,
+  handleOnProdDtlsShowDataChange,
+  handleOnManualEditDataChange,
   activeComponent,
   handleOnBackClick,
   handleOnNextClick,
   handleOnDownloadClick,
 }) => {
+  const [autoGenFinalPrices, setAutoGenFinalPrices] = useState(
+    inputAutoGenFinalPrices
+  );
+  const [manualTotalAmount, setManualTotalAmount] = useState(
+    inputManualTotalAmount
+  );
+
   const [editProductDtlsId, setEditProductDtlsId] = useState(null);
 
   // deep copy: emptyProdDtls.map((emptyProd) => {return {...emptyProd}})
@@ -74,6 +87,65 @@ const ProductDetailsComponent = ({
     setEditProductDtlsId(null);
   };
 
+  const initialCheckboxItems = [
+    {
+      label: "Unit Price",
+      keyName: "rate",
+      checked: true,
+    },
+    {
+      label: "Qty",
+      keyName: "qty",
+      checked: true,
+    },
+    {
+      label: "Net Amount",
+      keyName: "netAmount",
+      checked: true,
+    },
+    {
+      label: "Gst Percent",
+      checked: true,
+      keyName: "gstPercent",
+    },
+    {
+      label: "Gst Amount",
+      checked: true,
+      keyName: "gstAmount",
+    },
+    {
+      label: "Total Amount",
+      checked: true,
+      keyName: "totalAmount",
+    },
+  ];
+  const handleOnCheckboxClicked = (index, updatedCheckboxItem) => {
+    // index: 0-unitprice/rate, 1-qty, 2-netamount, 3-taxamount, 4-totalamount
+    let { label, keyName, checked } = updatedCheckboxItem;
+    // console.log("handleOnCheckboxClicked: ", label, keyName, checked)
+    handleOnProdDtlsShowDataChange(keyName, checked);
+  };
+
+  const handleOnRadioClicked = (index) => {
+    // index: 0-auto, 1-manual
+    if (index == 0) {
+      setAutoGenFinalPrices((prev) => true);
+      handleOnManualEditDataChange(true, manualTotalAmount);
+    } else if (index == 1) {
+      setAutoGenFinalPrices((prev) => false);
+      handleOnManualEditDataChange(false, manualTotalAmount);
+    }
+
+    initialCheckboxItems.forEach((tempCheckboxItemx) => {
+      handleOnProdDtlsShowDataChange(tempCheckboxItemx.keyName, index == 0);
+    });
+  };
+
+  const handleOnTotalAmountChange = (e) => {
+    let totalAmount = e.target.value;
+    setManualTotalAmount((prev) => totalAmount);
+  };
+
   return (
     <div
       // onSubmit={handleAllProductsSubmit(onProdDtlSubmit)}
@@ -86,6 +158,36 @@ const ProductDetailsComponent = ({
       />
 
       <div className="p-2" />
+      <div className="w-full h-full p-4 flex flex-col">
+        {/* <label>Show in PDF: </label> */}
+        <RadioButtonList
+          handleOnRadioClicked={handleOnRadioClicked}
+          radioItems={[
+            { label: "Autogenerate Final Prices", checked: true },
+            { label: "Manual Edit Prices", checked: false },
+          ]}
+        />
+        {/* <CheckboxList
+          handleOnCheckboxClicked={handleOnCheckboxClicked}
+          chkboxItems={initialCheckboxItems}
+          disableComponent={autoGenFinalPrices}
+        /> */}
+        <div
+          className={`${
+            autoGenFinalPrices && "bg-gray-100"
+          } w-full h-full flex flex-col md:flex-row gap-2 p-4 my-2`}
+        >
+          <label>Total Amount: </label>{" "}
+          <input
+            type="number"
+            placeholder="Enter Total Amount Here..."
+            className="border-0 outline-0 border-b-2 border-black focus:border-blue-600"
+            value={manualTotalAmount}
+            onChange={handleOnTotalAmountChange}
+            disabled={autoGenFinalPrices}
+          />
+        </div>
+      </div>
 
       {editProductDtlsId != null && (
         <CustomFormModal
@@ -105,6 +207,18 @@ const ProductDetailsComponent = ({
         />
       )}
 
+      <TableComponent
+        headDataObj={[
+          { name: "desc" },
+          { name: "rate" },
+          { name: "qty" },
+          { name: "gstPercent" },
+        ]}
+        bodyDataObj={products}
+        handleOnEditClicked={handleOnProdDtlsEditClicked}
+        handleOnDeleteClicked={handleOnProdDtlsDeleteClicked}
+      />
+
       <CustomFormModal
         id={products ? products.length : 0}
         modalBtnName="Add New Product"
@@ -122,26 +236,16 @@ const ProductDetailsComponent = ({
         showModalOpenerBtn={true}
       />
 
-      <TableComponent
-        headDataObj={[
-          { name: "desc" },
-          { name: "rate" },
-          { name: "qty" },
-          { name: "gstPercent" },
-        ]}
-        bodyDataObj={products}
-        handleOnEditClicked={handleOnProdDtlsEditClicked}
-        handleOnDeleteClicked={handleOnProdDtlsDeleteClicked}
-      />
-
       <InvoiceFormFooterButtons
         activeComponent={activeComponent}
         enableNextBtn={products?.length > 0}
-        enableSaveBtn={products?.length > 0}
+        enableSaveBtn={products?.length > 0 || !autoGenFinalPrices}
         handleOnBackClick={() => handleOnBackClick()}
         handleOnNextClick={() => handleOnNextClick()}
-        // handleOnSaveClick={() => setIsProdDtlFormSubmittedOnce(true)}
-        handleOnDownloadClick={() => handleOnDownloadClick()}
+        handleOnSaveClick={() =>
+          handleOnManualEditDataChange(autoGenFinalPrices, manualTotalAmount)
+        }
+        // handleOnDownloadClick={() => handleOnDownloadClick()}
       />
     </div>
   );

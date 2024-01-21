@@ -31,13 +31,13 @@ const CustomButtonWithIcon = ({
   showTextOnSmallScreens,
   otherStyles,
 }) => {
-  console.log(
-    "showTextOnSmallScreens: ",
-    showTextOnSmallScreens,
-    label,
-    showTextOnSmallScreens ? "true" : "false",
-    btnWidth == null
-  );
+  // console.log(
+  //   "showTextOnSmallScreens: ",
+  //   showTextOnSmallScreens,
+  //   label,
+  //   showTextOnSmallScreens ? "true" : "false",
+  //   btnWidth == null
+  // );
   return (
     <div className={``}>
       <button

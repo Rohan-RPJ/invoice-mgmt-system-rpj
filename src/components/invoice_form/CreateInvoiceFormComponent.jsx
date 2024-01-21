@@ -43,7 +43,9 @@ const CreateInvoiceFormComponent = ({
   let emptyInvoiceDate = invoiceJsonProcessor.getEmptyInvoiceDate();
   let emptyYourCmpnyDtls = invoiceJsonProcessor.getEmptyYourCompanyDetails();
   let emptyCustDtls = invoiceJsonProcessor.getEmptyCustomerDetails();
-  let emptyProdDtls = invoiceJsonProcessor.getEmptyProductItems();
+  let [emptyProdDtls, setEmptyProdDetails] = useState(
+    invoiceJsonProcessor.getEmptyProductItems()
+  ); // to set only show fields keys
   let emptyMyCmpnyBankDtls = invoiceJsonProcessor.getEmptyMyCompanyBankDtls();
   let emptyTnC = invoiceJsonProcessor.getEmptyTnC();
 
@@ -64,6 +66,12 @@ const CreateInvoiceFormComponent = ({
     ...emptyYourCmpnyDtls,
   });
   const [tnC, setTnC] = useState(emptyTnC);
+  const [autoGenFinalPrices, setAutoGenFinalPrices] = useState(
+    invoiceJsonProcessor.getEmptyAutoGenFinalPrices()
+  );
+  const [manualTotalAmount, setManualTotalAmount] = useState(
+    invoiceJsonProcessor.getEmptyManualTotalAmt()
+  );
 
   const handleOnInvoiceNoChange = (data) => {
     setInvoiceNo((prevDtls) => data);
@@ -100,7 +108,7 @@ const CreateInvoiceFormComponent = ({
   };
 
   const handleOnProdDtlsDeleteClicked = (id) => {
-    console.log("handleOnProdDtlsDeleteClicked", id);
+    // console.log("handleOnProdDtlsDeleteClicked", id);
     // Delete product with given id
     setProducts((prevProducts) =>
       prevProducts
@@ -109,6 +117,36 @@ const CreateInvoiceFormComponent = ({
           return prevProd;
         })
     );
+  };
+
+  const handleOnProdDtlsShowDataChange = (keyName, checked) => {
+    // console.log("handleOnProdDtlsShowDataChange", keyName, "checked", checked);
+    // Show/Hide keyName for all products
+    setProducts((prevProducts) =>
+      prevProducts.map((prevProd) => {
+        let tempPrevProd = { ...prevProd };
+        tempPrevProd["show_" + keyName] = checked;
+        return tempPrevProd;
+      })
+    );
+
+    setEmptyProdDetails((prevProducts) =>
+      prevProducts.map((prevProd) => {
+        let tempPrevProd = { ...prevProd };
+        tempPrevProd["show_" + keyName] = checked;
+        return tempPrevProd;
+      })
+    );
+  };
+
+  const handleOnManualEditDataChange = (autoGenFinalPrices, manualTotalAmt) => {
+    console.log(
+      "handleOnManualEditDataChange: ",
+      autoGenFinalPrices,
+      manualTotalAmt
+    );
+    setAutoGenFinalPrices((prev) => autoGenFinalPrices);
+    setManualTotalAmount(manualTotalAmt);
   };
 
   const [eSignUrl, setESignUrl] = useState(null);
@@ -130,6 +168,10 @@ const CreateInvoiceFormComponent = ({
     myCmpnyBankDtls &&
       invoiceJsonProcessor.processMyCompanyBankDtls(myCmpnyBankDtls);
     tnC && invoiceJsonProcessor.processTnC(tnC);
+    autoGenFinalPrices != null &&
+      invoiceJsonProcessor.processAutoGenFinalPrices(autoGenFinalPrices);
+    manualTotalAmount &&
+      invoiceJsonProcessor.processManualTotalAmt(manualTotalAmount);
     setInvoiceJsonData({ ...invoiceJsonProcessor.getUpdatedInvoiceJson() });
 
     if (isMobileNav) window.scrollTo(0, 0); // scroll to top
@@ -142,6 +184,8 @@ const CreateInvoiceFormComponent = ({
     eSignUrl,
     myCmpnyBankDtls,
     tnC,
+    autoGenFinalPrices,
+    manualTotalAmount,
   ]);
 
   /////////////////
@@ -204,7 +248,9 @@ const CreateInvoiceFormComponent = ({
 
   return (
     <div className="w-full h-full invoice-form">
-      <div className={`w-full h-full flex flex-col-reverse lg:flex-row gap-8 lg:gap-0`}>
+      <div
+        className={`w-full h-full flex flex-col-reverse lg:flex-row gap-8 lg:gap-0`}
+      >
         <div className={`w-full lg:w-[50%] lg:basis-1/2" h-full`}>
           {activeComponent === 0 && (
             <InvoiceDetailsComponent
@@ -262,9 +308,13 @@ const CreateInvoiceFormComponent = ({
             <ProductDetailsComponent
               products={products}
               emptyProdDtls={emptyProdDtls}
+              autoGenFinalPrices={autoGenFinalPrices}
+              manualTotalAmount={manualTotalAmount}
               isMobileNav={isMobileNav}
               handleOnProdDtlsChange={handleOnProdDtlsChange}
               handleOnProdDtlsDeleteClicked={handleOnProdDtlsDeleteClicked}
+              handleOnProdDtlsShowDataChange={handleOnProdDtlsShowDataChange}
+              handleOnManualEditDataChange={handleOnManualEditDataChange}
               activeComponent={activeComponent}
               handleOnBackClick={handleOnBackClick}
               handleOnNextClick={handleOnNextClick}
