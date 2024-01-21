@@ -29,17 +29,27 @@ const CustomButtonWithIcon = ({
   keepLabelIconGap,
   borderColor,
   showTextOnSmallScreens,
-  otherStyles
+  otherStyles,
 }) => {
-  console.log("showTextOnSmallScreens: " , showTextOnSmallScreens, label, showTextOnSmallScreens ? "true" : "false", btnWidth== null)
+  console.log(
+    "showTextOnSmallScreens: ",
+    showTextOnSmallScreens,
+    label,
+    showTextOnSmallScreens ? "true" : "false",
+    btnWidth == null
+  );
   return (
     <div className={``}>
       <button
         type={`${btnType ? btnType : "button"}`}
         onClick={handleOnClick}
-        className={`${btnWidth == null ? `${Icon ? "w-30" : "w-28"} sm:w-40` : btnWidth} p-2 ${
-          disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`
-        } ${showTextOnSmallScreens ? "rounded-md" : "rounded-full"} md:rounded-md ${textColor} ${hoverTextColor!=null && hoverTextColor} ${
+        className={`${
+          btnWidth == null ? `${Icon ? "w-30" : "w-28"} sm:w-40` : btnWidth
+        } p-2 ${disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`} ${
+          showTextOnSmallScreens ? "rounded-md" : "rounded-full p-3 md:p-2"
+        } md:rounded-md ${textColor} ${
+          hoverTextColor != null && hoverTextColor
+        } ${
           borderColor != null && `border-2 ${borderColor}`
         } group transition duration-150 ${otherStyles && `${otherStyles}`}`}
         disabled={disabled ? disabled : false}
@@ -76,7 +86,9 @@ const CustomButtonWithIcon = ({
                   }`
                 : ""
             }
-            transition-all duration-150 ${!showTextOnSmallScreens && "hidden"} md:block`}
+            transition-all duration-150 ${
+              !showTextOnSmallScreens && "hidden"
+            } md:block`}
           >
             {label}
           </span>

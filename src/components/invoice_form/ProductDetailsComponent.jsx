@@ -93,7 +93,7 @@ const ProductDetailsComponent = ({
           modalTitle="Update Product/Item Details Below"
           modalSubmitBtnName="Update Product"
           modalCancelBtnName="Cancel"
-          modalBody={ProductDetailsComponent}
+          modalBody={ProductDetailsInputComponent}
           modalBodyAttr={{
             id: editProductDtlsId,
             handleOnProdDetailChange: handleOnProdDtlsSubmit,
@@ -136,8 +136,8 @@ const ProductDetailsComponent = ({
 
       <InvoiceFormFooterButtons
         activeComponent={activeComponent}
-        enableNextBtn={products.length > 0}
-        enableSaveBtn={products.length > 0}
+        enableNextBtn={products?.length > 0}
+        enableSaveBtn={products?.length > 0}
         handleOnBackClick={() => handleOnBackClick()}
         handleOnNextClick={() => handleOnNextClick()}
         // handleOnSaveClick={() => setIsProdDtlFormSubmittedOnce(true)}
