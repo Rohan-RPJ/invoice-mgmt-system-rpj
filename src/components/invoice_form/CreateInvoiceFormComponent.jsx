@@ -204,7 +204,7 @@ const CreateInvoiceFormComponent = ({
 
   return (
     <div className="w-full h-full invoice-form">
-      <div className={`w-full h-full flex flex-col-reverse lg:flex-row`}>
+      <div className={`w-full h-full flex flex-col-reverse lg:flex-row gap-8 lg:gap-0`}>
         <div className={`w-full lg:w-[50%] lg:basis-1/2" h-full`}>
           {activeComponent === 0 && (
             <InvoiceDetailsComponent
@@ -316,6 +316,7 @@ const CreateInvoiceFormComponent = ({
               <InvoiceFormFooterButtons
                 activeComponent={activeComponent}
                 enableNextBtn={eSignUrl !== null}
+                enableSaveBtn={true}
                 handleOnBackClick={() => handleOnBackClick()}
                 handleOnSaveClick={() => handleOnESignSaveClicked()}
                 handleOnDownloadClick={() => handleOnDownloadClick()}

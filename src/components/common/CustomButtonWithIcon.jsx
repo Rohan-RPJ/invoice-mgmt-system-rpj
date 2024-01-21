@@ -31,12 +31,13 @@ const CustomButtonWithIcon = ({
   showTextOnSmallScreens,
   otherStyles
 }) => {
+  console.log("showTextOnSmallScreens: " , showTextOnSmallScreens, label, showTextOnSmallScreens ? "true" : "false", btnWidth== null)
   return (
     <div className={``}>
       <button
         type={`${btnType ? btnType : "button"}`}
         onClick={handleOnClick}
-        className={`${btnWidth == null ? `${Icon ? "w-32" : "w-28"} sm:w-40` : btnWidth} p-2 ${
+        className={`${btnWidth == null ? `${Icon ? "w-30" : "w-28"} sm:w-40` : btnWidth} p-2 ${
           disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`
         } ${showTextOnSmallScreens ? "rounded-md" : "rounded-full"} md:rounded-md ${textColor} ${hoverTextColor!=null && hoverTextColor} ${
           borderColor != null && `border-2 ${borderColor}`

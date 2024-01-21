@@ -13,6 +13,7 @@ const TnCComponent = ({
   activeComponent,
   handleOnBackClick,
   handleOnNextClick,
+  handleOnSaveClick
 }) => {
   const {
     register,
@@ -28,7 +29,7 @@ const TnCComponent = ({
 
   const handleOnTnCSubmit = (data) => {
     // it means tnC are entered by user and are also validated
-    console.log("onTnCSubmit", data);
+    console.log("onTnCSubmit", data, isFormSubmittedOnce, isObjectEmpty(formErrors));
 
     if (data != null && !isObjectEmpty(data)) {
       const delayDebounceFn = setTimeout(() => {
@@ -94,7 +95,7 @@ const TnCComponent = ({
           enableSaveBtn={true}
           handleOnBackClick={() => handleOnBackClick()}
           handleOnNextClick={() => handleOnNextClick()}
-          //   handleOnSaveClick={() => handleOnSaveClick()}
+            handleOnSaveClick={() => handleOnSaveClick()}
         />
       </div>
     </form>
