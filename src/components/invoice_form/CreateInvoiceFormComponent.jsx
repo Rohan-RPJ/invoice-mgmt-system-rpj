@@ -198,6 +198,7 @@ const CreateInvoiceFormComponent = ({
     useState(false);
   const [isCustDtlFormSubmittedOnce, setIsCustDtlFormSubmittedOnce] =
     useState(false);
+  const [isTnCFormSubmittedOnce, setIsTnCFormSubmittedOnce] = useState(false);
 
   const [defaultYourCmpnyEdited, setDefaultYourCmpnyEdited] = useState(false);
 
@@ -296,12 +297,13 @@ const CreateInvoiceFormComponent = ({
               <TnCComponent
                 form={tnCForm}
                 tnC={tnC}
-                // isFormSubmittedOnce={isFormSubmittedOnce}
+                isFormSubmittedOnce={isTnCFormSubmittedOnce}
                 isMobileNav={isMobileNav}
                 handleOnTnCChange={handleOnTnCChange}
                 activeComponent={activeComponent}
                 handleOnBackClick={handleOnBackClick}
                 handleOnNextClick={handleOnNextClick}
+                handleOnSaveClick={() => setIsTnCFormSubmittedOnce(true)}
               />
             </div>
           )}
