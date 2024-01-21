@@ -97,9 +97,7 @@ const BasePageComponent = ({ pageContent: PageContent, pageProps }) => {
           </main>
 
           {/* Footer */}
-          <footer className={`w-full h-full`}>
-            <Footer />
-          </footer>
+          <footer className={`w-full h-full`}>{/* <Footer /> */}</footer>
         </div>
       </div>
     </div>

@@ -44,7 +44,7 @@ const ProductDetailsInputComponent = ({
         inputValidations={{
           required: "Product Description required!",
           maxLength: {
-            value: 100,
+            value: 500,
             message: "Product Description too Long!",
           },
         }}
