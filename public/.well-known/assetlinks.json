@@ -1,0 +1,5 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "com.invoicemanagement",
+                 "sha256_cert_fingerprints": ["4E:9E:FE:20:CB:93:C0:1C:2A:4E:0F:0B:47:7E:70:64:F7:F4:2E:87:DC:AB:2C:57:44:D0:F8:05:C1:65:6B:B7"] }
+  }]
