@@ -140,11 +140,11 @@ const CreateInvoiceFormComponent = ({
   };
 
   const handleOnManualEditDataChange = (autoGenFinalPrices, manualTotalAmt) => {
-    console.log(
-      "handleOnManualEditDataChange: ",
-      autoGenFinalPrices,
-      manualTotalAmt
-    );
+    // console.log(
+    //   "handleOnManualEditDataChange: ",
+    //   autoGenFinalPrices,
+    //   manualTotalAmt
+    // );
     setAutoGenFinalPrices((prev) => autoGenFinalPrices);
     setManualTotalAmount(manualTotalAmt);
   };
@@ -156,8 +156,8 @@ const CreateInvoiceFormComponent = ({
 
   // if user updates/adds product details -> update invoiceJsonData supplied to pdf -> update pdf
   useEffect(() => {
-    console.log("useEffect::Products::", products);
-    console.log("useEffect::eSignUrl::", eSignUrl);
+    // console.log("useEffect::Products::", products);
+    // console.log("useEffect::eSignUrl::", eSignUrl);
     invoiceNo && invoiceJsonProcessor.processInvoiceNo(invoiceNo);
     invoiceDate && invoiceJsonProcessor.processInvoiceDate(invoiceDate);
     yourCompanyDtls &&

@@ -14,11 +14,11 @@ const InvoiceDetailsInputComponent = ({
   const [invoiceDate, setInvoiceDateVal] = useState(inputInvoiceDate);
   const handleInvoiceNoOnChange = (inputName, inputValue) => {
     setInvoiceNoVal(inputValue);
-    console.log("In handleInvoiceNoOnChange", inputName, inputValue);
+    // console.log("In handleInvoiceNoOnChange", inputName, inputValue);
   };
   const handleInvoiceDateOnChange = (inputName, inputValue) => {
     setInvoiceDateVal(inputValue);
-    console.log("In handleInvoiceDateOnChange", inputName, inputValue);
+    // console.log("In handleInvoiceDateOnChange", inputName, inputValue);
   };
 
   return (

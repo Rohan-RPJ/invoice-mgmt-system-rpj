@@ -26,7 +26,7 @@ class GetInvoiceNo {
     }
 
     let invoiceSeqNo = this.getInvoiceSeqNo();
-    let invoiceNo = cmpnyShortName + "-" + dd + mm + yy + + "-" + invoiceSeqNo;
+    let invoiceNo = cmpnyShortName + "-" + dd + mm + yy + "-" + invoiceSeqNo;
 
     return invoiceNo;
   }

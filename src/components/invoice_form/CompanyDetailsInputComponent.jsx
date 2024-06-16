@@ -40,32 +40,32 @@ const CompanyDetailsInputComponent = ({
 
   const handleCmpnyNameOnChange = (inputName, inputValue) => {
     setCmpnyNameVal(inputValue);
-    console.log("In handleCmpnyNameOnChange", inputName, inputValue);
+    // console.log("In handleCmpnyNameOnChange", inputName, inputValue);
   };
 
   const handleCmpnyAddrOnChange = (inputName, inputValue) => {
     setCmpnyAddrVal(inputValue);
-    console.log("In handleCmpnyAddrOnChange", inputName, inputValue);
+    // console.log("In handleCmpnyAddrOnChange", inputName, inputValue);
   };
 
   const handleMobNoOnChange = (inputName, inputValue) => {
     setCmpnyMobNoVal(inputValue);
-    console.log("In handleMobNoOnChange", inputName, inputValue);
+    // console.log("In handleMobNoOnChange", inputName, inputValue);
   };
 
   const handleEmailIdOnChange = (inputName, inputValue) => {
     setCmpnyEmailVal(inputValue);
-    console.log("In handleEmailIdOnChange", inputName, inputValue);
+    // console.log("In handleEmailIdOnChange", inputName, inputValue);
   };
 
   const handlePanNoOnChange = (inputName, inputValue) => {
     setCmpnyPanNoVal(inputValue);
-    console.log("In handlePanNoOnChange", inputName, inputValue);
+    // console.log("In handlePanNoOnChange", inputName, inputValue);
   };
 
   const handleGstOnChange = (inputName, inputValue) => {
     setCmpnyGstVal(inputValue);
-    console.log("In handleGstOnChange", inputName, inputValue);
+    // console.log("In handleGstOnChange", inputName, inputValue);
   };
 
   return (

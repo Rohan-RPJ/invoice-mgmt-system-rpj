@@ -21,7 +21,7 @@ const MyCompanyBankDetailsInputComponent = ({
   });
   const [fileSrc, setFileSrc] = useState(myCmpnyBankDtls.upiQrImg);
   const onFileSelect = (e) => {
-    console.log("ININI");
+    // console.log("ININI");
     if (!e.target.files?.length) {
       return;
     }

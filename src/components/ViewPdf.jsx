@@ -45,7 +45,7 @@ const ViewPdf = ({ doc: MyPdfDocument, pdfData, isMobileNav }) => {
   return (
     <DynamicBlobProvider document={<MyPdfDocument data={pdfData} />}>
       {({ blob, url, loading }) => {
-        console.log("url", url, loading);
+        // console.log("url", url, loading);
 
         return loading || url == null ? (
           ""

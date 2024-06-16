@@ -43,7 +43,7 @@ const CustomerDetailsComponent = ({
 
   const onCustDtlSubmit = (data) => {
     // it means customer details are entered by user and are also validated
-    console.log("onCustDtlSubmit", data);
+    // console.log("onCustDtlSubmit", data);
 
     if (data != null && !isObjectEmpty(data)) {
       const delayDebounceFn = setTimeout(() => {

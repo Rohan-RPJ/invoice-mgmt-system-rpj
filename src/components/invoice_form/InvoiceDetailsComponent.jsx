@@ -24,7 +24,7 @@ const InvoiceDetailsComponent = ({
 
   const onInvoiceDtlSubmit = (data) => {
     // it means invoice details are entered by user and are also validated
-    console.log("onInvoiceDtlSubmit", data);
+    // console.log("onInvoiceDtlSubmit", data);
 
     if (data != null && !isObjectEmpty(data)) {
       const delayDebounceFn = setTimeout(() => {

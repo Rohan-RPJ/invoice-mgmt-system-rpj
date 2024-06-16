@@ -24,12 +24,12 @@ const TnCComponent = ({
   const [tnC, setTnC] = useState(inputTnC);
   const handleTnCOnChange = (inputName, inputValue) => {
     setTnC(inputValue);
-    console.log("In handleTnCNoOnChange", inputName, inputValue);
+    // console.log("In handleTnCNoOnChange", inputName, inputValue);
   };
 
   const handleOnTnCSubmit = (data) => {
     // it means tnC are entered by user and are also validated
-    console.log("onTnCSubmit", data, isFormSubmittedOnce, isObjectEmpty(formErrors));
+    // console.log("onTnCSubmit", data, isFormSubmittedOnce, isObjectEmpty(formErrors));
 
     if (data != null && !isObjectEmpty(data)) {
       const delayDebounceFn = setTimeout(() => {

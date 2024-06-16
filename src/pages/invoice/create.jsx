@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   // console.log(context);
   // const invoice_no = new GetInvoiceNo().getInvoiceNo("VSS");
   const invoice_no = "";
-  console.log(invoice_no);
+  // console.log(invoice_no);
   return { props: { invoice_no } };
 }
 

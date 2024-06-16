@@ -7,7 +7,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 
 const BasePageComponent = ({ pageContent: PageContent, pageProps }) => {
   const { user } = useUser();
-  console.log("user", user);
+  // console.log("user", user);
 
   const [dimensions, setDimensions] = useState({
     height: null,

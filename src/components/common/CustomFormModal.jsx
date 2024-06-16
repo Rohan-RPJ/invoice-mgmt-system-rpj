@@ -31,7 +31,7 @@ const CustomFormModal = ({
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("onProdDtlSubmit", data);
+    // console.log("onProdDtlSubmit", data);
     handleOnModalClose(id);
     setShowModal(false);
     handleOnModalFormSubmit(id, data);

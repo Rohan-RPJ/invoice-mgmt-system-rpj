@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 });
 
 const Invoice = ({ data: invoice }) => {
-  console.log("Invoice:::", invoice);
+  // console.log("Invoice:::", invoice);
   return (
     <Document>
       <Page size="A4" style={styles.page} wrap={true}>

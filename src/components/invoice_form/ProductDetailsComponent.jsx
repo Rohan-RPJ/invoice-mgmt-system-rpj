@@ -39,7 +39,7 @@ const ProductDetailsComponent = ({
   //     return { ...emptyProd };
   //   })
   // );
-  console.log("products", products);
+  // console.log("products", products);
   const handleOnProdDtlsSubmit = (prodId, prodData) => {
     /*
           prodData = {
@@ -59,7 +59,7 @@ const ProductDetailsComponent = ({
     isProductFound
       ? (tempProductObj = products[prodId])
       : (tempProductObj = { ...emptyProdDtls[0] });
-    console.log("prodData", prodData);
+    // console.log("prodData", prodData);
 
     for (const key in prodData) {
       if (key.split("-")[0] == prodId && prodData.hasOwnProperty(key)) {
@@ -67,8 +67,8 @@ const ProductDetailsComponent = ({
       }
     }
 
-    console.log("isProdFound", isProductFound);
-    console.log("tempProd", tempProductObj);
+    // console.log("isProdFound", isProductFound);
+    // console.log("tempProd", tempProductObj);
 
     const delayDebounceFn = setTimeout(() => {
       handleOnProdDtlsChange(isProductFound, prodId, tempProductObj);
@@ -80,7 +80,7 @@ const ProductDetailsComponent = ({
   };
 
   const handleOnProdDtlsEditClicked = (id) => {
-    console.log("handleOnProdDtlsEditClicked", id);
+    // console.log("handleOnProdDtlsEditClicked", id);
     setEditProductDtlsId(id);
   };
   const handleOnProdDtlsModalClose = (id) => {

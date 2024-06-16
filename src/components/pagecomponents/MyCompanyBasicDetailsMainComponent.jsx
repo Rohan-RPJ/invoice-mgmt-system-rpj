@@ -31,7 +31,7 @@ const MyCompanyBasicDetailsMainComponent = ({ isMobileNav }) => {
 
   const onMyCmpnyBasicDtlsSubmit = (data) => {
     // it means customer details are entered by user and are also validated
-    console.log("onMyCmpnyBasicDtlsSubmit", data);
+    // console.log("onMyCmpnyBasicDtlsSubmit", data);
 
     if (data != null && !isObjectEmpty(data)) {
       setMyCmpnyBasicDtls((prevDtls) => ({

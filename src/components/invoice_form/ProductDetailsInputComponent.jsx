@@ -13,7 +13,7 @@ const ProductDetailsInputComponent = ({
   isFormSubmittedOnce,
   isMobileNav,
 }) => {
-  console.log("ID", id)
+  // console.log("ID", id)
   const handleOnChange = (prodName, prodValue) => {
     // handleProdDetailChange(id, prodName.split("-")[1], prodValue);
   };

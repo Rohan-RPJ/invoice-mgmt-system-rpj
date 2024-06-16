@@ -28,7 +28,7 @@ const CustomFormTextArea = ({
   const handleOnInputChange = (inputName, inputValue) => {
     if (inputValue && inputValue !== "") setIsInputValNullEmpty(false);
     else setIsInputValNullEmpty(true);
-    console.log(isFormSubmittedOnce, isInputValNullEmpty, inputValue);
+    // console.log(isFormSubmittedOnce, isInputValNullEmpty, inputValue);
     handleOnChange && handleOnChange(inputName, inputValue);
   };
 
