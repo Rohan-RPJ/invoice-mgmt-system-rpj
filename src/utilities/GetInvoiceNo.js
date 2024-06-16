@@ -3,7 +3,7 @@ var PropertiesReader = require("properties-reader");
 // var filePath = process.env.PROPS_BASE_PATH;
 // var properties = PropertiesReader(filePath);
 class GetInvoiceNo {
-  constructor() {}
+  constructor() { }
 
   getInvoiceNo(cmpnyShortName) {
     let today = new Date();
@@ -26,7 +26,7 @@ class GetInvoiceNo {
     }
 
     let invoiceSeqNo = this.getInvoiceSeqNo();
-    let invoiceNo = dd + mm + yy + "-" + cmpnyShortName + "-" + invoiceSeqNo;
+    let invoiceNo = cmpnyShortName + "-" + dd + mm + yy + + "-" + invoiceSeqNo;
 
     return invoiceNo;
   }

@@ -1,4 +1,5 @@
 import { bankDetails, billFrom } from "@/models/SellerDetailsJson";
+import GetInvoiceNo from "./GetInvoiceNo";
 
 class InvoiceJsonProcessor {
   #emptyInvoiceJson;
@@ -7,7 +8,7 @@ class InvoiceJsonProcessor {
     this.#emptyInvoiceJson = {
       id: "5df3180a09ea16dc4b95f910",
       // invoice_no: true ? "111123-VSS-85" : invoiceNo,
-      invoice_no: invoiceNo ? invoiceNo : "1",
+      invoice_no: invoiceNo ? invoiceNo : new GetInvoiceNo().getInvoiceNo("VSS"),
       balance: "$2,283.74",
       billFrom: billFrom,
       // billFrom: {
