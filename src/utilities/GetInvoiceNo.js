@@ -34,6 +34,9 @@ class GetInvoiceNo {
   getInvoiceSeqNo() {
     // let invoiceSeqNo = properties.get("vss") + 1;
     let invoiceSeqNo = "1";
+    if (typeof window !== "undefined") {
+      invoiceSeqNo = localStorage.getItem("invoiceSeqNo") || "1"
+    }
     return invoiceSeqNo;
   }
 }

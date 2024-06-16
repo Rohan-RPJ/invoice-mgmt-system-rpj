@@ -95,16 +95,16 @@ const CreateInvoiceFormComponent = ({
   const handleOnProdDtlsChange = (isProductFound, prodId, tempProductObj) => {
     isProductFound
       ? setProducts((prevProducts) =>
-          prevProducts.map((prevProd, ind) => {
-            if (ind === prodId) return tempProductObj;
-            return prevProd;
-          })
-        )
+        prevProducts.map((prevProd, ind) => {
+          if (ind === prodId) return tempProductObj;
+          return prevProd;
+        })
+      )
       : setProducts((prevProducts) =>
-          [...prevProducts, tempProductObj].map((newProd) => {
-            return newProd;
-          })
-        );
+        [...prevProducts, tempProductObj].map((newProd) => {
+          return newProd;
+        })
+      );
   };
 
   const handleOnProdDtlsDeleteClicked = (id) => {
@@ -207,6 +207,10 @@ const CreateInvoiceFormComponent = ({
 
     // const { data, error } = useSWR("/api/invoice/update-seqno", fetcher);
     // update invoice seqno
+    if (typeof window !== "undefined") {
+      let invoiceSeqNo = parseInt(invoiceJsonData.invoice_no?.split("-").at(-1))
+      !isNaN(invoiceSeqNo) && localStorage.setItem("invoiceSeqNo", invoiceSeqNo + 1)
+    }
     fetch("/api/invoice/update-seqno", {
       method: "POST",
       headers: {
@@ -318,7 +322,7 @@ const CreateInvoiceFormComponent = ({
               activeComponent={activeComponent}
               handleOnBackClick={handleOnBackClick}
               handleOnNextClick={handleOnNextClick}
-              // handleOnDownloadClick={handleOnDownloadClick}
+            // handleOnDownloadClick={handleOnDownloadClick}
             />
           )}
 
@@ -337,7 +341,7 @@ const CreateInvoiceFormComponent = ({
                 enableNextBtn={true}
                 handleOnBackClick={() => handleOnBackClick()}
                 handleOnNextClick={handleOnNextClick}
-                // handleOnSaveClick={() => handleOnESignSaveClicked()}
+              // handleOnSaveClick={() => handleOnESignSaveClicked()}
               />
             </div>
           )}
