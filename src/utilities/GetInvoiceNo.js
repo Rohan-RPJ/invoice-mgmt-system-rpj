@@ -37,7 +37,7 @@ class GetInvoiceNo {
     if (typeof window !== "undefined") {
       invoiceSeqNo = localStorage.getItem("invoiceSeqNo") || "1"
     }
-    return invoiceSeqNo;
+    return invoiceSeqNo.length === 1 ? "0" + invoiceSeqNo : invoiceSeqNo;
   }
 }
 
