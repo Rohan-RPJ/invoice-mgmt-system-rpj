@@ -9,7 +9,7 @@ class GetInvoiceNo {
     let today = new Date();
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
-    let yy = today.getFullYear().toString().slice(2, 4);
+    let yy = today.getFullYear().toString().slice(0, 4);
     if (dd < 10) {
       dd = "0" + dd;
     }
@@ -26,7 +26,7 @@ class GetInvoiceNo {
     }
 
     let invoiceSeqNo = this.getInvoiceSeqNo();
-    let invoiceNo = cmpnyShortName + "-" + dd + mm + yy + "-" + invoiceSeqNo;
+    let invoiceNo = dd + mm + yy + "-" + cmpnyShortName + "-" + invoiceSeqNo;
 
     return invoiceNo;
   }
