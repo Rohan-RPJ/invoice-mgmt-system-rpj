@@ -71,16 +71,17 @@ class InvoiceJsonProcessor {
         prodTotAmt = item.rate * item.qty;
         prodGstAmt = prodTotAmt * (item.gstPercent / (100 + item.gstPercent));
         prodNetAmt = prodTotAmt - prodGstAmt;
-        item.rate = prodNetAmt / item.qty
+        item.updatedRate = prodNetAmt / item.qty
       } else {
         prodNetAmt = item.rate * item.qty;
         prodGstAmt = (prodNetAmt * item.gstPercent) / 100;
         prodTotAmt = prodNetAmt + prodGstAmt;
       }
 
-      item.prodNetAmt = prodNetAmt;
-      item.prodGstAmt = prodGstAmt;
-      item.prodTotAmt = prodTotAmt;
+      item.prodNetAmt = prodNetAmt.toFixed(2);
+      item.prodGstAmt = prodGstAmt.toFixed(2);
+      item.prodTotAmt = prodTotAmt.toFixed(2);
+      item.isAmountWithTax = isAmountWithTax;
 
       totalGstAmt += prodGstAmt;
       totalInvoiceAmt += prodTotAmt;

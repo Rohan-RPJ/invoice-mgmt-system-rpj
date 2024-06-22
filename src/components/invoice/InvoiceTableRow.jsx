@@ -91,7 +91,7 @@ const InvoiceTableRow = ({ items }) => {
         <Text style={styles.srno}>{index + 1}</Text>
         <Text style={styles.description}>{item.desc}</Text>
         <AmountComponent
-          amount={item.rate}
+          amount={item.isAmountWithTax ? item.updatedRate : rate}
           showAmount={item.show_rate}
           style={styles.rate}
         />
