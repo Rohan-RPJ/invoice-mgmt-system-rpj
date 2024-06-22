@@ -117,7 +117,7 @@ const ProductDetailsInputComponent = ({
         <label className="w-[55%]">Amount With/Without Tax</label>
         <RadioButtonList radioItems={[{ label: "With Tax", checked: isAmountWithTax === true || isAmountWithTax === null || isAmountWithTax === undefined ? true : false, id: "taxWith" }, { label: "Without Tax", checked: isAmountWithTax === false ? true : false, id: "taxWithout" }]}
           handleOnRadioClicked={(selectedIndex) => { console.log(selectedIndex, selectedIndex == 1);; selectedIndex == 1 ? handleIsAmountWithTax(false) : handleIsAmountWithTax(true) }}
-          disableInputs={totalProducts > 1}
+          disableInputs={id != 0 && totalProducts > 0}
         />
       </div>
     </div>

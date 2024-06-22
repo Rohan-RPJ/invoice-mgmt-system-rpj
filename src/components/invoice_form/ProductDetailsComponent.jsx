@@ -209,7 +209,7 @@ const ProductDetailsComponent = ({
       <TableComponent
         headDataObj={[
           { name: "desc" },
-          { name: "rate" },
+          { name: isAmountWithTax ? "updatedRate" : "rate" },
           { name: "qty" },
           { name: "gstPercent" },
         ]}

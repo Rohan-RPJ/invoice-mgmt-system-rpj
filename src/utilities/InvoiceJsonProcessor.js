@@ -71,7 +71,7 @@ class InvoiceJsonProcessor {
         prodTotAmt = item.rate * item.qty;
         prodGstAmt = prodTotAmt * (item.gstPercent / (100 + item.gstPercent));
         prodNetAmt = prodTotAmt - prodGstAmt;
-        item.updatedRate = prodNetAmt / item.qty
+        item.updatedRate = (prodNetAmt / item.qty).toFixed(2)
       } else {
         prodNetAmt = item.rate * item.qty;
         prodGstAmt = (prodNetAmt * item.gstPercent) / 100;
