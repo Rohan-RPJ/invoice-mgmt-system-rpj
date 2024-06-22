@@ -4,13 +4,15 @@ import React, { useState } from "react";
 radioItems = [
     {
         label: "label",
-        checked: true/false
+        checked: true/false,
+        id: "unique-id"
     }
 ]
 */
 const RadioButtonList = ({
   radioItems: inputRadioItems,
   handleOnRadioClicked,
+  disableInputs
 }) => {
   const [radioItems, setRadioItems] = useState(inputRadioItems);
 
@@ -35,31 +37,33 @@ const RadioButtonList = ({
   };
 
   return (
-    <div className="relative flex w-full  flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className={`relative flex w-full  flex-col rounded-xl ${disableInputs ? 'bg-[#f2f2f2]' : 'bg-white shadow-md'} bg-clip-border text-gray-700`}>
       <nav className="flex min-w-[200px] flex-row flex-wrap gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-        {radioItems.map(({ label, checked }, index) => {
+        {radioItems.map(({ label, checked, id }, index) => {
+          let idKey = id ? index + "-" + id : index;
           return (
             <div
               role="button"
               className="flex items-center w-auto p-0 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
-              key={index}
+              key={idKey}
             >
               <label
-                htmlFor={`horizontal-list-${index}`}
+                htmlFor={`horizontal-list-${idKey}`}
                 className="flex items-center w-full px-3 py-2 cursor-pointer"
               >
                 <div className="grid mr-3 place-items-center">
                   <div className="inline-flex items-center">
                     <label
                       className="relative flex items-center p-0 rounded-full cursor-pointer"
-                      htmlFor={`horizontal-list-${index}`}
+                      htmlFor={`horizontal-list-${idKey}`}
                     >
                       <input
-                        id={`horizontal-list-${index}`}
+                        id={`horizontal-list-${idKey}`}
                         type="radio"
-                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-0"
+                        className={`before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-0`}
                         checked={checked}
                         onClick={handleRadioButtonOnClick}
+                        disabled={disableInputs}
                       />
                       <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                         <svg
@@ -80,7 +84,7 @@ const RadioButtonList = ({
                     </label>
                   </div>
                 </div>
-                <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+                <p className={`block font-sans text-base antialiased font-medium leading-relaxed ${disableInputs ? 'text-[gray]' : 'text-blue-gray-900'}`}>
                   {label}
                 </p>
               </label>

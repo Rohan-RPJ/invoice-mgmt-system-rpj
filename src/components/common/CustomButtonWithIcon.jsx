@@ -43,52 +43,41 @@ const CustomButtonWithIcon = ({
       <button
         type={`${btnType ? btnType : "button"}`}
         onClick={handleOnClick}
-        className={`${
-          btnWidth == null ? `${Icon ? "w-30" : "w-28"} sm:w-40` : btnWidth
-        } p-2 ${disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`} ${
-          showTextOnSmallScreens ? "rounded-md" : "rounded-full p-3 md:p-2"
-        } md:rounded-md ${textColor} ${
-          hoverTextColor != null && hoverTextColor
-        } ${
-          borderColor != null && `border-2 ${borderColor}`
-        } group transition duration-150 ${otherStyles && `${otherStyles}`}`}
+        className={`${btnWidth == null ? `${Icon ? "w-30" : "w-28"} sm:w-40` : btnWidth
+          } p-2 ${disabled ? "bg-gray-400" : `${bgColor} ${hoverBgColor}`} ${showTextOnSmallScreens ? "rounded-md" : "rounded-full p-3 md:p-2"
+          } md:rounded-md ${textColor} ${hoverTextColor != null && hoverTextColor
+          } ${borderColor != null && `border-2 ${borderColor}`
+          } group transition-all duration-500 ${otherStyles && `${otherStyles}`}`}
         disabled={disabled ? disabled : false}
       >
         <div
-          className={`w-full h-full flex ${
-            isIconFirst ? "flex-row" : "flex-row-reverse"
-          } ${
-            keepLabelIconGap == null || keepLabelIconGap === true
+          className={`w-full h-full flex ${isIconFirst ? "flex-row" : "flex-row-reverse"
+            } ${keepLabelIconGap == null || keepLabelIconGap === true
               ? "justify-around"
               : "justify-center gap-1"
-          }`}
+            }`}
         >
           {Icon && (
             <Icon
-              className={`w-4 sm:w-5 transition-all duration-150 ${
-                !disabled &&
+              className={`w-4 sm:w-5 transition-all duration-150 ${!disabled &&
                 doIconTransition &&
-                `${
-                  isIconFirst
-                    ? "group-hover:-translate-x-2"
-                    : "group-hover:translate-x-2"
+                `${isIconFirst
+                  ? "group-hover:-translate-x-2"
+                  : "group-hover:translate-x-2"
                 }`
-              }`}
+                }`}
             />
           )}
           <span
-            className={`${
-              Icon && !disabled && doIconTransition
-                ? `${
-                    isIconFirst
-                      ? "group-hover:translate-x-1"
-                      : "group-hover:-translate-x-1"
-                  }`
-                : ""
-            }
-            transition-all duration-150 ${
-              !showTextOnSmallScreens && "hidden"
-            } md:block`}
+            className={`${Icon && !disabled && doIconTransition
+              ? `${isIconFirst
+                ? "group-hover:translate-x-1"
+                : "group-hover:-translate-x-1"
+              }`
+              : ""
+              }
+            transition-all duration-150 ${!showTextOnSmallScreens && "hidden"
+              } md:block`}
           >
             {label}
           </span>

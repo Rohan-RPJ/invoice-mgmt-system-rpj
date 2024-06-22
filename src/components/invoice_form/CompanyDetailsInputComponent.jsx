@@ -109,6 +109,7 @@ const CompanyDetailsInputComponent = ({
         }}
         register={register}
         inputValidations={{
+          required: sellerCustomerText + " Address required!",
           maxLength: {
             value: 180,
             message: "Address too Long!",

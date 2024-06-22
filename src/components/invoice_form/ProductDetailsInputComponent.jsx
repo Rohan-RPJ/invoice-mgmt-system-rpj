@@ -1,8 +1,5 @@
-import { useState } from "react";
+import RadioButtonList from "../common/RadioButtonList";
 import InputEnabledFieldComponent from "./InputEnabledFieldComponent";
-import CustomFormSectionTitleSubTitle from "../common/CustomFormSectionTitleSubTitle";
-import { useForm } from "react-hook-form";
-import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 
 const ProductDetailsInputComponent = ({
   id,
@@ -12,8 +9,10 @@ const ProductDetailsInputComponent = ({
   formErrors,
   isFormSubmittedOnce,
   isMobileNav,
+  isAmountWithTax,
+  handleIsAmountWithTax,
+  totalProducts
 }) => {
-  // console.log("ID", id)
   const handleOnChange = (prodName, prodValue) => {
     // handleProdDetailChange(id, prodName.split("-")[1], prodValue);
   };
@@ -58,7 +57,7 @@ const ProductDetailsInputComponent = ({
         inputType="number"
         inputName={id + "-rate"}
         prefilledValue={prodDtls?.rate}
-        otherAttr={{ placeHolder: "Product Unit Price" }}
+        otherAttr={{ placeHolder: "Product Unit Price", step: "any" }}
         handleOnChange={handleOnChange}
         register={register}
         inputValidations={{
@@ -113,6 +112,14 @@ const ProductDetailsInputComponent = ({
         formErrors={formErrors}
         isFormSubmittedOnce={isFormSubmittedOnce}
       />
+      {console.log(totalProducts)}
+      <div className={`pt-4 pb-6 px-4 w-full flex flex-col sm:flex-row gap-4 sm:gap-8`}>
+        <label className="w-[55%]">Amount With/Without Tax</label>
+        <RadioButtonList radioItems={[{ label: "With Tax", checked: isAmountWithTax === true || isAmountWithTax === null || isAmountWithTax === undefined ? true : false, id: "taxWith" }, { label: "Without Tax", checked: isAmountWithTax === false ? true : false, id: "taxWithout" }]}
+          handleOnRadioClicked={(selectedIndex) => { console.log(selectedIndex, selectedIndex == 1);; selectedIndex == 1 ? handleIsAmountWithTax(false) : handleIsAmountWithTax(true) }}
+          disableInputs={totalProducts > 1}
+        />
+      </div>
     </div>
   );
 };

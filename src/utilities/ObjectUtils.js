@@ -5,3 +5,20 @@ export const isObjectEmpty = (objectName) => {
     objectName.constructor === Object
   );
 };
+
+export const isJSONObject = (obj) => {
+  return obj !== null
+    &&
+    typeof obj === 'object'
+    &&
+    obj.constructor === Object;
+}
+
+export const isJsonString = (str) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}

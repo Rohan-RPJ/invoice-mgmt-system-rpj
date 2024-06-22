@@ -6,6 +6,16 @@ import LinkWithIcon from "./LinkWithIcon";
 import CustomImage from "./CustomImage";
 import Link from "next/link";
 
+/*ddItems: [
+            { Icon: UsersIcon, text: "Find Friends" },
+            { Icon: Cog6ToothIcon, text: "Settings" },
+            { Icon: ShareIcon, text: "Share" },
+            {
+              Icon: ArrowRightOnRectangleIcon,
+              text: "Sign Out",
+              onClickHandler: () => signOut(),
+            },
+          ]*/
 const DropdownWithImage = ({
   isActiveDropdown,
   ddItems,
@@ -31,9 +41,8 @@ const DropdownWithImage = ({
   return (
     <div className="relative flex gap-2">
       <p
-        className={`text-right ${
-          truncateDDText && "truncate"
-        } hover:cursor-pointer`}
+        className={`text-right ${truncateDDText && "truncate"
+          } hover:cursor-pointer`}
         onClick={() => onHoverHandler()}
         name="dropdown"
       >
@@ -80,33 +89,25 @@ const DropdownWithImage = ({
           onMouseLeave={() => onHoverHandler()}
         >
           {
-            /*[
-            { Icon: UsersIcon, text: "Find Friends" },
-            { Icon: Cog6ToothIcon, text: "Settings" },
-            { Icon: ShareIcon, text: "Share" },
-            {
-              Icon: ArrowRightOnRectangleIcon,
-              text: "Sign Out",
-              onClickHandler: () => signOut(),
-            },
-          ]*/
             ddItems.map(({ Icon, text, link, onClickHandler }, index, arr) => (
               <li
                 key={index}
-                className={`flex flex-col justify-center space-x-1 px-2 cursor-pointer hover:bg-gray-200 ${
-                  index !== arr.length - 1
-                    ? `${index === 0 ? "rounded-tl-md rounded-tr-md" : ""}`
-                    : "rounded-bl-md rounded-br-md"
-                }`}
-                onClick={onClickHandler ? () => onClickHandler() : () => {}}
+                className={`flex flex-col justify-center space-x-1 px-2 cursor-pointer hover:bg-gray-200 ${index !== arr.length - 1
+                  ? `${index === 0 ? "rounded-tl-md rounded-tr-md" : ""}`
+                  : "rounded-bl-md rounded-br-md"
+                  }`}
+                onClick={onClickHandler ? () => onClickHandler() : () => { }}
               >
-                <Link
-                  href={link ? link : "#"}
-                  className={`pr-20 pl-4 py-6 flex items-center space-x-4 font-sans font-normal whitespace-nowrap text-black text-base cursor-pointer hover:text-gigas`}
-                >
-                  <Icon width={25} height={22} className={"text-gray-600"} />
-                  <p className="text-gray-900">{text}</p>
-                </Link>
+                {link && link !== null ?
+                  <Link
+                    href={link ? link : "#"}
+                    className={`pr-20 pl-4 py-6 flex items-center space-x-4 font-sans font-normal whitespace-nowrap text-black text-base cursor-pointer hover:text-gigas`}
+                  >
+                    <Icon width={25} height={22} className={"text-gray-600"} />
+                    <p className="text-gray-900">{text}</p>
+                  </Link>
+                  : <p className="text-gray-900">{text}</p>
+                }
                 <hr
                   className={`w-full ${index === arr.length - 1 && "hidden"}`}
                 />

@@ -13,6 +13,9 @@ import ESignComponent from "./../common/ESignComponent";
 import InvoiceFormFooterButtons from "./InvoiceFormFooterButtons";
 import MyCompanyBankDetailsInputComponent from "./MyCompanyBankDetailsInputComponent";
 import TnCComponent from "./TnCComponent";
+import CustomButtonWithIcon from "../common/CustomButtonWithIcon";
+import { useRouter } from 'next/router'
+
 
 // import useSWR, { mutate } from "swr";
 
@@ -22,6 +25,8 @@ const CreateInvoiceFormComponent = ({
   invoiceNo: inputInvoiceNo,
   isMobileNav,
 }) => {
+  const router = useRouter()
+
   // ask for confirmation if user does refresh
   useEffect(() => {
     const unloadCallback = (event) => {
@@ -35,9 +40,8 @@ const CreateInvoiceFormComponent = ({
   }, []);
 
   const invoiceJsonProcessor = new InvoiceJsonProcessor(inputInvoiceNo);
-  const [invoiceJsonData, setInvoiceJsonData] = useState(
-    invoiceJsonProcessor.getEmptyInvoiceJson()
-  );
+  const [invoiceJsonData, setInvoiceJsonData] = useState(invoiceJsonProcessor.getInitialInvoiceJsonData());
+  const [isAmountWithTax, setIsAmountWithTax] = useState(true);
 
   let emptyInvoiceNo = invoiceJsonProcessor.getEmptyInvoiceNo();
   let emptyInvoiceDate = invoiceJsonProcessor.getEmptyInvoiceDate();
@@ -149,10 +153,7 @@ const CreateInvoiceFormComponent = ({
     setManualTotalAmount(manualTotalAmt);
   };
 
-  const [eSignUrl, setESignUrl] = useState(null);
-  const handleOnESignSaveClicked = () => {
-    // set esign in invoice json to be used in pdf
-  };
+  const [eSignUrl, setESignUrl] = useState(invoiceJsonProcessor.getEmptyEsignUrl());
 
   // if user updates/adds product details -> update invoiceJsonData supplied to pdf -> update pdf
   useEffect(() => {
@@ -163,7 +164,7 @@ const CreateInvoiceFormComponent = ({
     yourCompanyDtls &&
       invoiceJsonProcessor.processYourCompanyDtls(yourCompanyDtls);
     customerDtls && invoiceJsonProcessor.processCustomerDtls(customerDtls);
-    products && invoiceJsonProcessor.processInvoiceBill(products);
+    products && invoiceJsonProcessor.processInvoiceBill(products, isAmountWithTax);
     eSignUrl && invoiceJsonProcessor.processESignature(eSignUrl);
     myCmpnyBankDtls &&
       invoiceJsonProcessor.processMyCompanyBankDtls(myCmpnyBankDtls);
@@ -174,7 +175,7 @@ const CreateInvoiceFormComponent = ({
       invoiceJsonProcessor.processManualTotalAmt(manualTotalAmount);
     setInvoiceJsonData({ ...invoiceJsonProcessor.getUpdatedInvoiceJson() });
 
-    if (isMobileNav) window.scrollTo(0, 0); // scroll to top
+    // if (isMobileNav) window.scrollTo(0, 0); // scroll to top
   }, [
     invoiceNo,
     invoiceDate,
@@ -199,6 +200,9 @@ const CreateInvoiceFormComponent = ({
   const handleOnDownloadClick = () => {
     // it means all data is entered by user and also validated
 
+    // save all data in local storage
+    localStorage.setItem("invoiceJson", JSON.stringify(invoiceJsonData));
+
     pdf(<Invoice data={invoiceJsonData} />)
       .toBlob()
       .then((blob) =>
@@ -211,13 +215,13 @@ const CreateInvoiceFormComponent = ({
       let invoiceSeqNo = parseInt(invoiceJsonData.invoice_no?.split("-").at(-1))
       !isNaN(invoiceSeqNo) && localStorage.setItem("invoiceSeqNo", invoiceSeqNo + 1)
     }
-    fetch("/api/invoice/update-seqno", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ invoiceNo: invoiceJsonData.invoice_no }),
-    });
+    // fetch("/api/invoice/update-seqno", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ invoiceNo: invoiceJsonData.invoice_no }),
+    // });
   };
 
   // 0 - YourCompanyDetails, 1 - CustomerDetails, 2 - ProductDetails
@@ -230,7 +234,7 @@ const CreateInvoiceFormComponent = ({
   const handleOnNextClick = () => {
     setActiveComponent((prev) => prev + 1);
 
-    window.scrollTo(0, 0); // scroll to top
+    // window.scrollTo(0, 0); // scroll to top
   };
 
   const invoiceDtlsForm = useForm();
@@ -249,6 +253,16 @@ const CreateInvoiceFormComponent = ({
   const [isTnCFormSubmittedOnce, setIsTnCFormSubmittedOnce] = useState(false);
 
   const [defaultYourCmpnyEdited, setDefaultYourCmpnyEdited] = useState(false);
+
+  const [showCreateInvoiceBtn, setShowCreateInvoiceBtn] = useState(false);
+  const [createBtnAnimation, setCreateBtnAnimation] = useState(true)
+  const displayCreateInvoiceBtn = () => {
+    setShowCreateInvoiceBtn(true);
+    setTimeout(() => {
+      setCreateBtnAnimation(false)
+    }, 3000)
+  }
+
 
   return (
     <div className="w-full h-full invoice-form">
@@ -311,6 +325,8 @@ const CreateInvoiceFormComponent = ({
           {activeComponent === 3 && (
             <ProductDetailsComponent
               products={products}
+              isAmountWithTax={isAmountWithTax}
+              handleIsAmountWithTax={(isAmtWithTax) => { console.log(isAmtWithTax); setIsAmountWithTax(isAmtWithTax) }}
               emptyProdDtls={emptyProdDtls}
               autoGenFinalPrices={autoGenFinalPrices}
               manualTotalAmount={manualTotalAmount}
@@ -322,7 +338,6 @@ const CreateInvoiceFormComponent = ({
               activeComponent={activeComponent}
               handleOnBackClick={handleOnBackClick}
               handleOnNextClick={handleOnNextClick}
-            // handleOnDownloadClick={handleOnDownloadClick}
             />
           )}
 
@@ -337,11 +352,11 @@ const CreateInvoiceFormComponent = ({
               />
               <InvoiceFormFooterButtons
                 activeComponent={activeComponent}
-                enableSaveBtn={true}
+                enableSaveBtn={false}
+                displaySaveBtn={false}
                 enableNextBtn={true}
                 handleOnBackClick={() => handleOnBackClick()}
                 handleOnNextClick={handleOnNextClick}
-              // handleOnSaveClick={() => handleOnESignSaveClicked()}
               />
             </div>
           )}
@@ -370,11 +385,24 @@ const CreateInvoiceFormComponent = ({
               <InvoiceFormFooterButtons
                 activeComponent={activeComponent}
                 enableNextBtn={eSignUrl !== null}
-                enableSaveBtn={true}
+                enableSaveBtn={false}
+                displaySaveBtn={false}
                 handleOnBackClick={() => handleOnBackClick()}
-                handleOnSaveClick={() => handleOnESignSaveClicked()}
-                handleOnDownloadClick={() => handleOnDownloadClick()}
+                handleOnDownloadClick={() => { handleOnDownloadClick(); displayCreateInvoiceBtn(true) }}
               />
+              {showCreateInvoiceBtn && <div className="flex flex-row justify-center mt-4">
+                <CustomButtonWithIcon
+                  label="Create New Invoice"
+                  btnType={"button"}
+                  btnWidth={'w-64'}
+                  handleOnClick={() => { router.reload() }}
+                  bgColor="bg-gradient-to-tl from-cyan-500 via-indigo-500 to-blue-50"
+                  hoverBgColor="hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500"
+                  textColor="text-white"
+                  showTextOnSmallScreens={true}
+                  otherStyles={`${!createBtnAnimation && 'bg-400% animate-wiggle self-center'}`}
+                />
+              </div>}
             </div>
           )}
         </div>

@@ -9,6 +9,7 @@ const InvoiceFormFooterButtons = ({
   activeComponent,
   enableNextBtn,
   enableSaveBtn,
+  displaySaveBtn,
   handleOnBackClick,
   handleOnNextClick,
   handleOnSaveClick,
@@ -42,6 +43,7 @@ const InvoiceFormFooterButtons = ({
           textColor="text-white"
           showTextOnSmallScreens={true}
           disabled={!enableSaveBtn}
+          otherStyles={displaySaveBtn === false && "invisible"}
         />
         {activeComponent <= 5 ? (
           <CustomButtonWithIcon

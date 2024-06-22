@@ -11,6 +11,8 @@ import RadioButtonList from "../common/RadioButtonList";
 
 const ProductDetailsComponent = ({
   products,
+  isAmountWithTax,
+  handleIsAmountWithTax,
   emptyProdDtls,
   autoGenFinalPrices: inputAutoGenFinalPrices,
   manualTotalAmount: inputManualTotalAmount,
@@ -22,7 +24,6 @@ const ProductDetailsComponent = ({
   activeComponent,
   handleOnBackClick,
   handleOnNextClick,
-  handleOnDownloadClick,
 }) => {
   const [autoGenFinalPrices, setAutoGenFinalPrices] = useState(
     inputAutoGenFinalPrices
@@ -67,9 +68,6 @@ const ProductDetailsComponent = ({
       }
     }
 
-    // console.log("isProdFound", isProductFound);
-    // console.log("tempProd", tempProductObj);
-
     const delayDebounceFn = setTimeout(() => {
       handleOnProdDtlsChange(isProductFound, prodId, tempProductObj);
     }, 0);
@@ -80,7 +78,6 @@ const ProductDetailsComponent = ({
   };
 
   const handleOnProdDtlsEditClicked = (id) => {
-    // console.log("handleOnProdDtlsEditClicked", id);
     setEditProductDtlsId(id);
   };
   const handleOnProdDtlsModalClose = (id) => {
@@ -148,7 +145,6 @@ const ProductDetailsComponent = ({
 
   return (
     <div
-      // onSubmit={handleAllProductsSubmit(onProdDtlSubmit)}
       className={`w-full h-full`}
     >
       <CustomFormSectionTitleSubTitle
@@ -173,9 +169,8 @@ const ProductDetailsComponent = ({
           disableComponent={autoGenFinalPrices}
         /> */}
         <div
-          className={`${
-            autoGenFinalPrices && "bg-gray-100"
-          } w-full h-full flex flex-col md:flex-row gap-2 p-4 my-2`}
+          className={`${autoGenFinalPrices && "bg-gray-100"
+            } w-full h-full flex flex-col md:flex-row gap-2 p-4 my-2`}
         >
           <label>Total Amount: </label>{" "}
           <input
@@ -200,6 +195,10 @@ const ProductDetailsComponent = ({
             id: editProductDtlsId,
             handleOnProdDetailChange: handleOnProdDtlsSubmit,
             prodDtls: products[editProductDtlsId],
+            isMobileNav: isMobileNav,
+            isAmountWithTax,
+            handleIsAmountWithTax,
+            totalProducts: products.length
           }}
           handleOnModalFormSubmit={handleOnProdDtlsSubmit}
           handleOnModalClose={handleOnProdDtlsModalClose}
@@ -230,6 +229,9 @@ const ProductDetailsComponent = ({
           id: products ? products.length : 0,
           handleOnProdDetailChange: handleOnProdDtlsSubmit,
           isMobileNav: isMobileNav,
+          isAmountWithTax,
+          handleIsAmountWithTax,
+          totalProducts: products.length
         }}
         handleOnModalFormSubmit={handleOnProdDtlsSubmit}
         handleOnModalClose={handleOnProdDtlsModalClose}
@@ -245,7 +247,6 @@ const ProductDetailsComponent = ({
         handleOnSaveClick={() =>
           handleOnManualEditDataChange(autoGenFinalPrices, manualTotalAmount)
         }
-        // handleOnDownloadClick={() => handleOnDownloadClick()}
       />
     </div>
   );

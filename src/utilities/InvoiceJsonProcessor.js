@@ -1,5 +1,6 @@
 import { bankDetails, billFrom } from "@/models/SellerDetailsJson";
 import GetInvoiceNo from "./GetInvoiceNo";
+import { isJsonString } from "./ObjectUtils";
 
 class InvoiceJsonProcessor {
   #emptyInvoiceJson;
@@ -56,14 +57,25 @@ class InvoiceJsonProcessor {
     this.invoiceJson = { ...this.#emptyInvoiceJson };
   }
 
-  processInvoiceBill(itemsDtls) {
+  processInvoiceBill(itemsDtls, isAmountWithTax) {
     let totalInvoiceAmt = 0;
     let totalGstAmt = 0;
 
     this.invoiceJson.items = itemsDtls.map((item) => {
-      let prodNetAmt = item.rate * item.qty;
-      let prodGstAmt = (prodNetAmt * item.gstPercent) / 100;
-      let prodTotAmt = prodNetAmt + prodGstAmt;
+      let prodNetAmt = 0;
+      let prodGstAmt = 0;
+      let prodTotAmt = 0;
+
+      item.gstPercent = parseInt(item.gstPercent)
+      if (isAmountWithTax) {
+        prodTotAmt = item.rate * item.qty;
+        prodGstAmt = prodTotAmt * (item.gstPercent / (100 + item.gstPercent));
+        prodNetAmt = prodTotAmt - prodGstAmt;
+      } else {
+        prodNetAmt = item.rate * item.qty;
+        prodGstAmt = (prodNetAmt * item.gstPercent) / 100;
+        prodTotAmt = prodNetAmt + prodGstAmt;
+      }
 
       item.prodNetAmt = prodNetAmt;
       item.prodGstAmt = prodGstAmt;
@@ -97,6 +109,10 @@ class InvoiceJsonProcessor {
 
   processESignature(eSignUrl) {
     this.invoiceJson.eSignUrl = eSignUrl;
+    // if (typeof window !== "undefined") {
+    //   // save esign image as base64
+    //   localStorage.setItem("eSignImg", eSignUrl.replace(/^data:image\/(png|jpg);base64,/, ""))
+    // }
   }
 
   processMyCompanyBankDtls(myCompanyBankDtls) {
@@ -135,6 +151,21 @@ class InvoiceJsonProcessor {
     return this.#emptyInvoiceJson;
   }
 
+  getInitialInvoiceJsonData() {
+    let localStrgInvoiceData = null;
+    if (typeof window !== "undefined") {
+      localStrgInvoiceData = isJsonString(localStorage.getItem("invoiceJson")) ? JSON.parse(localStorage.getItem("invoiceJson")) : null;
+    }
+    if (localStrgInvoiceData === null) {
+      localStrgInvoiceData = this.getEmptyInvoiceJson();
+    } else {
+      this.#emptyInvoiceJson = localStrgInvoiceData;
+      // validate if all fields are present in 
+    }
+    // console.log("local", localStrgInvoiceData);
+    return localStrgInvoiceData;
+  }
+
   getEmptyYourCompanyDetails() {
     return this.#emptyInvoiceJson.billFrom;
   }
@@ -148,11 +179,23 @@ class InvoiceJsonProcessor {
   }
 
   getEmptyInvoiceNo() {
-    return this.#emptyInvoiceJson.invoice_no;
+    // return this.#emptyInvoiceJson.invoice_no;
+    return new GetInvoiceNo().getInvoiceNo("VSS");
   }
 
   getEmptyInvoiceDate() {
-    return this.#emptyInvoiceJson.trans_date;
+    // return this.#emptyInvoiceJson.trans_date;
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    const formattedToday = yyyy + '-' + mm + '-' + dd;
+
+    return formattedToday;
   }
 
   getEmptyMyCompanyBankDtls() {
@@ -169,6 +212,10 @@ class InvoiceJsonProcessor {
 
   getEmptyManualTotalAmt() {
     return this.#emptyInvoiceJson.manualTotalAmt;
+  }
+
+  getEmptyEsignUrl() {
+    return this.#emptyInvoiceJson.eSignUrl;
   }
 }
 
