@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontFamily: "OpenSans-Bold",
     fontSize: 13,
     textAlign: "right",
-    textTransform: "capitalize",
+    textTransform: "uppercase",
   },
   reportSubTitle: {
     color: "black",
