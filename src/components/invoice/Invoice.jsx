@@ -66,7 +66,7 @@ const Invoice = ({ data: invoice }) => {
             </Text>
           )}
           <InvoiceTitle
-            title="Tax Invoice/Bill of Supply/Cash Memo"
+            title="Invoice/Bill of Supply"
             subtitle="(Original for Recipient)"
           />
         </View>

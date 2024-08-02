@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 const BillFrom = ({ invoice }) => (
   <View style={styles.headerContainer}>
-    <Text style={styles.billFrom}>Sold By:</Text>
+    <Text style={styles.billFrom}>By:</Text>
     <Text style={{ textTransform: "uppercase" }}>
       {invoice.billFrom.company}
     </Text>
