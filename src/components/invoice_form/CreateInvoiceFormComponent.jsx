@@ -343,13 +343,13 @@ const CreateInvoiceFormComponent = ({
 
           {activeComponent === 4 && (
             <div>
-              <MyCompanyBankDetailsInputComponent
+              {/* <MyCompanyBankDetailsInputComponent
                 bankDetails={myCmpnyBankDtls}
                 handleOnMyCmpnyBankDtlsChange={(myCmpnyBankDtls) =>
                   setMyCmpnyBankDtls(myCmpnyBankDtls)
                 }
                 isMobileNav={isMobileNav}
-              />
+              />*/}
               <InvoiceFormFooterButtons
                 activeComponent={activeComponent}
                 enableSaveBtn={false}
